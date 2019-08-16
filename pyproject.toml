@@ -13,6 +13,7 @@ click = "^7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.1"
+bumpversion = "^0.5.3"
 
 [build-system]
 requires = ["poetry>=0.12"]

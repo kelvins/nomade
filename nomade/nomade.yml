@@ -1,0 +1,10 @@
+migrations: migrations
+database:
+  driver: sqlite
+  user: root
+  pass: root
+  host: localhost
+  port: 9606
+  name: my_db
+datefmt: %d/%m/%Y
+namefmt: {date}_{time}_{id}_{slug} 

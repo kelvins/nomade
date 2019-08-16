@@ -1,4 +1,4 @@
-migrations: migrations
+location: migrations
 database:
   driver: sqlite
   user: root

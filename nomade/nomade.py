@@ -14,8 +14,8 @@ class Nomade:
     @staticmethod
     def init():
         os.mkdir('migrations')
-        shutil.copyfile('nomade.yml', '.')
-        shutil.copyfile('template.py', '.')
+        shutil.copyfile(os.path.join('assets', 'nomade.yml'), '.')
+        shutil.copyfile(os.path.join('assets', 'template.py'), '.')
 
     def migrate(self, name):
         # Generate migration parameters
@@ -34,20 +34,20 @@ class Nomade:
             file_name += '.py'
 
         # Read content from the template file
-        with open(settings.template, 'r') as template_file:
+        with open(self.settings.template, 'r') as template_file:
             template = template_file.read()
 
         # TODO: we can use jinja2 if needed
         # Generate the file content
         file_content = template.format(
             name=name,
-            date=date_time.strftime(settings.date_fmt),
+            date=date_time.strftime(self.settings.date_fmt),
             up_migration=unique_id,
-            down_migration=None # TODO: retrieve current migration from files
+            down_migration=None  # TODO: retrieve current migration from files
         )
 
         # Create the migration file
-        file_path = os.path.join(settings.location, file_name)
+        file_path = os.path.join(self.settings.location, file_name)
         with open(file_path, 'w') as migration_file:
             migration_file.write(file_content)
 

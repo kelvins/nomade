@@ -1,6 +1,8 @@
-# Nomade
+<p align="center">
+  <img src="https://github.com/kelvins/nomade/blob/master/docs/logo.png" alt="Nomade Logo" title="Nomade Logo" />
+</p>
 
-Python Migration Manager for Humans :camel:
+> Python Migration Manager for Humans :camel:
 
 ## Quick Start
 

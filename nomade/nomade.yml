@@ -1,10 +1,6 @@
-location: migrations
-database:
-  driver: sqlite
-  user: root
-  pass: root
-  host: localhost
-  port: 9606
-  name: my_db
-datefmt: %d/%m/%Y
-namefmt: {date}_{time}_{id}_{slug} 
+# Nomade settings definition
+location: "migrations"
+template: "template.py"
+conn_str: "postgresql://user:pass@localhost:5432/db_name"
+date_fmt: "%d/%m/%Y"
+name_fmt: "{date}_{time}_{id}_{slug}"

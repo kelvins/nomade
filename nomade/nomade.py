@@ -9,7 +9,7 @@ from settings import Settings
 
 class Nomade:
     def __init__(self, settings_path='./nomade.yml'):
-        self.settings = Settings(settings_path)
+        self.settings = Settings.load(settings_path)
 
     @staticmethod
     def init():

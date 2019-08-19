@@ -2,20 +2,29 @@ import os
 import uuid
 import shutil
 from datetime import datetime
+from functools import namedtuple
 
-from nomade import utils
+import utils
 from settings import Settings
+
+Migration = namedtuple(
+    'Migration', ('id', 'name', 'date', 'up_migration', 'down_migration')
+)
 
 
 class Nomade:
-    def __init__(self, settings_path='./nomade.yml'):
+    def __init__(self, settings_path='.nomade.yml'):
         self.settings = Settings.load(settings_path)
 
     @staticmethod
-    def init():
+    def init(location='.'):
         os.mkdir('migrations')
-        shutil.copyfile(os.path.join('assets', 'nomade.yml'), '.')
-        shutil.copyfile(os.path.join('assets', 'template.py'), '.')
+        files_to_copy = ['.nomade.yml', 'template.py']
+        for file in files_to_copy:
+            shutil.copyfile(
+                os.path.join('assets', file),
+                os.path.join(location, file)
+            )
 
     def migrate(self, name):
         # Generate migration parameters

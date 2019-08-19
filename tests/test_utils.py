@@ -11,3 +11,7 @@ def test_slugify_with_multiple_spaces():
 
 def test_slugify_with_special_chars():
     assert utils.slugify('# Nomad _on the road!') == 'nomad_on_the_road'
+
+
+def test_unique_id():
+    assert utils.unique_id() != utils.unique_id()

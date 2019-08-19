@@ -1,4 +1,14 @@
 import re
+import uuid
+
+
+def unique_id():
+    """Generate a unique ID for the migration using uuid4.
+
+    Returns:
+        String containing a unique ID.
+    """
+    return str(uuid.uuid4())[:8]
 
 
 def slugify(content):

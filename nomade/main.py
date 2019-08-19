@@ -15,9 +15,9 @@ def init():
 
 @cli.command(help='Create a new migration')
 @click.argument('name')
-def migrate():
+def migrate(name):
     nomade = Nomade()
-    nomade.migrate()
+    nomade.migrate(name)
 
 
 @cli.command(help='Upgrade migrations')

@@ -6,10 +6,7 @@ from functools import namedtuple
 
 import utils
 from settings import Settings
-
-Migration = namedtuple(
-    'Migration', ('id', 'name', 'date', 'up_migration', 'down_migration')
-)
+from migration import Migration
 
 
 class Nomade:
@@ -26,9 +23,18 @@ class Nomade:
                 os.path.join(location, file)
             )
 
+    def _get_migrations(self):
+        """Load all migrations unsorted.
+
+        Returns:
+            List with all migrations (objects).
+        """
+        locat = self.settings.location
+        return [Migration.load(locat, name) for name in os.listdir(locat)]
+
     def migrate(self, name):
         # Generate migration parameters
-        unique_id = str(uuid.uuid4())[:10]
+        unique_id = utils.unique_id()
         date_time = datetime.now()
         slug = utils.slugify(name)
 
@@ -49,9 +55,9 @@ class Nomade:
         # TODO: we can use jinja2 if needed
         # Generate the file content
         file_content = template.format(
-            name=name,
-            date=date_time.strftime(self.settings.date_fmt),
-            up_migration=unique_id,
+            migration_name=name,
+            migration_date=date_time.strftime(self.settings.date_fmt),
+            curr_migration=unique_id,
             down_migration=None  # TODO: retrieve current migration from files
         )
 

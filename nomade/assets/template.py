@@ -1,11 +1,12 @@
-"""
-Name: {name}
-ID: {up_migration}
-Date: {date}
+"""{migration_name} ({migration_date})
+
+Migration {curr_migration} revises {down_migration}.
 """
 
 # Nomade migration identifiers
-migration = '{up_migration}'
+migration_name = '{migration_name}'
+migration_date = '{migration_date}'
+curr_migration = '{curr_migration}'
 down_migration = '{down_migration}'
 
 

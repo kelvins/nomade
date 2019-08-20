@@ -49,8 +49,10 @@ class Nomade:
         """
         migrations = list()
         for name in os.listdir(self.settings.location):
-            if not name.startswith('__') and not name.endswith('__.py'):
+            try:
                 migrations.append(Migration.load(self.settings.location, name))
+            except AttributeError:
+                pass
         return self._sort_migrations(migrations)
 
     def _get_latest_migration(self):

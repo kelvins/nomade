@@ -1,10 +1,13 @@
 import click
+from colorama import Fore
 
 from nomade import Nomade
+from __init__ import __version__
 
 
 @click.group()
 def cli():
+    print(Fore.CYAN + f'Nomade ({__version__})')
     pass
 
 

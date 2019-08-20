@@ -11,6 +11,7 @@ repository = "https://github.com/kelvins/nomade"
 python = "^3.7"
 click = "^7.0"
 pyyaml = "^5.1"
+colorama = "^0.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.1"

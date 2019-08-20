@@ -5,6 +5,8 @@ import shutil
 from datetime import datetime
 from functools import namedtuple
 
+from colorama import Fore
+
 import utils
 from settings import Settings
 from migration import Migration
@@ -80,7 +82,7 @@ class Nomade:
             migration_name=name,
             migration_date=date_time.strftime(self.settings.date_fmt),
             curr_migration=unique_id,
-            down_migration=''  # TODO: retrieve current migration from files
+            down_migration=self._get_latest_migration().id
         )
 
         # Create the migration file
@@ -97,7 +99,7 @@ class Nomade:
     def history(self):
         migrations = self._get_migrations()
         for migration in migrations:
-            print(f'{migration.down_migration.rjust(8)} -> {migration.id}: {migration.name} ({migration.date})')
+            print(Fore.YELLOW + f'{migration.down_migration.rjust(8)} -> ' + Fore.CYAN + f'{migration.id}' + Fore.RESET + f': {migration.name} ({migration.date})')
 
     def current(self):
         raise NotImplementedError('Not implemented yet')

@@ -1,5 +1,6 @@
 import os
 import uuid
+import copy
 import shutil
 from datetime import datetime
 from functools import namedtuple
@@ -14,14 +15,29 @@ class Nomade:
         self.settings = Settings.load(settings_path)
 
     @staticmethod
-    def init(location='.'):
-        os.mkdir('migrations')
-        files_to_copy = ['.nomade.yml', 'template.py']
-        for file in files_to_copy:
-            shutil.copyfile(
-                os.path.join('assets', file),
-                os.path.join(location, file)
-            )
+    def init():
+        os.makedirs('nomade/migrations')
+        shutil.copyfile(
+            os.path.join('assets', '.nomade.yml'),
+            os.path.join('.', '.nomade.yml')
+        )
+        shutil.copyfile(
+            os.path.join('assets', 'template.py'),
+            os.path.join('./nomade', 'template.py')
+        )
+
+    @staticmethod
+    def _sort_migrations(migrations):
+        migrations_dict = {migration.down_migration: migration for migration in migrations}
+        sorted_migrations = list()
+        current_migration = ''
+        while True:
+            try:
+                sorted_migrations.append(migrations_dict[current_migration])
+                current_migration = sorted_migrations[-1].id
+            except KeyError:
+                break
+        return sorted_migrations
 
     def _get_migrations(self):
         """Load all migrations unsorted.
@@ -29,8 +45,14 @@ class Nomade:
         Returns:
             List with all migrations (objects).
         """
-        locat = self.settings.location
-        return [Migration.load(locat, name) for name in os.listdir(locat)]
+        migrations = list()
+        for name in os.listdir(self.settings.location):
+            if not name.startswith('__') and not name.endswith('__.py'):
+                migrations.append(Migration.load(self.settings.location, name))
+        return self._sort_migrations(migrations)
+
+    def _get_latest_migration(self):
+        return self._get_migrations()[-1]
 
     def migrate(self, name):
         # Generate migration parameters
@@ -58,7 +80,7 @@ class Nomade:
             migration_name=name,
             migration_date=date_time.strftime(self.settings.date_fmt),
             curr_migration=unique_id,
-            down_migration=None  # TODO: retrieve current migration from files
+            down_migration=''  # TODO: retrieve current migration from files
         )
 
         # Create the migration file
@@ -73,7 +95,9 @@ class Nomade:
         raise NotImplementedError('Not implemented yet')
 
     def history(self):
-        raise NotImplementedError('Not implemented yet')
+        migrations = self._get_migrations()
+        for migration in migrations:
+            print(f'{migration.down_migration.rjust(8)} -> {migration.id}: {migration.name} ({migration.date})')
 
     def current(self):
         raise NotImplementedError('Not implemented yet')

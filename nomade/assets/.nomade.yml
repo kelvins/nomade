@@ -1,6 +1,6 @@
 # Nomade settings definition
-location: "migrations"
-template: "template.py"
+location: "nomade/migrations"
+template: "nomade/template.py"
 conn_str: "postgresql://user:pass@localhost:5432/db_name"
 date_fmt: "%d/%m/%Y"
 name_fmt: "{date}_{time}_{id}_{slug}"

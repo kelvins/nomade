@@ -1,9 +1,6 @@
 import os
-import uuid
-import copy
 import shutil
 from datetime import datetime
-from functools import namedtuple
 
 from colorama import Fore
 

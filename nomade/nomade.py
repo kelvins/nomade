@@ -66,38 +66,18 @@ class Nomade:
         return self._get_migrations()[-1]
 
     def migrate(self, name):
-        # Generate migration parameters
-        unique_id = utils.unique_id()
-        date_time = datetime.now()
-        slug = utils.slugify(name)
+        """Create a new Nomade migration using the Migration class.
 
-        # Create migration file name based on settings.name_fmt
-        file_name = self.settings.name_fmt.format(
-            date=date_time.strftime('%Y%m%d'),
-            time=date_time.strftime('%H%M%S'),
-            id=unique_id,
-            slug=slug
-        )
-        if not file_name.endswith('.py'):
-            file_name += '.py'
-
-        # Read content from the template file
-        with open(self.settings.template, 'r') as template_file:
-            template = template_file.read()
-
-        # TODO: we can use jinja2 if needed
-        # Generate the file content
-        file_content = template.format(
-            migration_name=name,
-            migration_date=date_time.strftime(self.settings.date_fmt),
-            curr_migration=unique_id,
+        Args:
+            name (str): A short migration name (e.g. Create user table).
+        """
+        migration = Migration(
+            id=utils.unique_id(),
+            name=name,
+            date=datetime.now().strftime(self.settings.date_fmt),
             down_migration=self._get_latest_migration().id
         )
-
-        # Create the migration file
-        file_path = os.path.join(self.settings.location, file_name)
-        with open(file_path, 'w') as migration_file:
-            migration_file.write(file_content)
+        migration.save()
 
     def upgrade(self):
         raise NotImplementedError('Not implemented yet')

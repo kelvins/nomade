@@ -5,5 +5,5 @@ init:
 flake8:
 	@flake8 nomade tests
 
-test:
+runtests:
 	@pytest -vv --cov-report term-missing --cov=nomade tests/

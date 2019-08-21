@@ -18,14 +18,24 @@ class Nomade:
 
     @staticmethod
     def init():
-        os.makedirs('nomade/migrations')
+        """Init a Nomade project by creating the
+        directories and copying the settings files.
+        """
+        print(Fore.RESET + 'Creating Nomade project:')
+        print(Fore.GREEN + '.')
+        print('├─ nomade')
+        print('│  ├─ template.py')
+        print('│  └─ migrations')
+        print('└─ .nomade.yml')
+
+        os.makedirs(os.path.join('nomade', 'migrations'))
         shutil.copyfile(
             os.path.join('assets', '.nomade.yml'),
             os.path.join('.', '.nomade.yml')
         )
         shutil.copyfile(
             os.path.join('assets', 'template.py'),
-            os.path.join('./nomade', 'template.py')
+            os.path.join('nomade', 'template.py')
         )
 
     @staticmethod

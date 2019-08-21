@@ -7,7 +7,7 @@ from __init__ import __version__
 
 @click.group()
 def cli():
-    print(Fore.CYAN + f'Nomade ({__version__})')
+    print(Fore.CYAN + f'Nomade ({__version__})\n')
     pass
 
 

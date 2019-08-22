@@ -73,3 +73,26 @@ class Migration:
             date=module.migration_date,
             down_migration=module.down_migration or None
         )
+
+    @staticmethod
+    def _sort_migrations(migrations):
+        migrations_dict = {m.down_migration: m for m in migrations}
+        migrations = list()
+        current = ''
+        while True:
+            try:
+                migrations.append(migrations_dict[current])
+                current = migrations[-1].id
+            except KeyError:
+                break
+        return migrations
+
+    @classmethod
+    def get_migrations(cls, settings):
+        migrations = list()
+        for name in os.listdir(settings.location):
+            try:
+                migrations.append(Migration.load(settings.location, name))
+            except AttributeError:
+                pass
+        return cls._sort_migrations(migrations)

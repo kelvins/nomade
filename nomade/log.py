@@ -1,4 +1,6 @@
-from colorama import Fore
+from colorama import Fore, init
+
+init()
 
 
 def colorize(fore_color):

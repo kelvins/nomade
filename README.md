@@ -6,7 +6,18 @@
 
 ## Feature Support
 
+- Manage your database migrations regardless of the ORM.
+- Support for SQLite
+- Support for MySQL (comming soon)
+- Support for PostgreSQL (comming soon)
+
 ## Installation
+
+Use [pip](https://pip.pypa.io/en/stable/installing/) to install Nomade:
+
+```bash
+pip install nomade
+```
 
 ## Quick Start
 
@@ -32,6 +43,12 @@ Manually edit the migration as you like and upgrade your database with:
 nomade upgrade
 ```
 
+If needed you can downgrade to a previous version with:
+
+```bash
+nomade downgrade
+```
+
 To check your current database migration or to check the migration history use the following commands:
 
 ```bash
@@ -41,5 +58,9 @@ nomade history
 
 ## Documentation
 
+Comming soon
+
 ## How to Contribute
+
+Comming soon
 

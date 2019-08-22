@@ -4,6 +4,10 @@
 
 > Python Migration Manager for Humans :camel:
 
+## Feature Support
+
+## Installation
+
 ## Quick Start
 
 Initialize a Nomade project with:
@@ -34,4 +38,8 @@ To check your current database migration or to check the migration history use t
 nomade current
 nomade history
 ```
+
+## Documentation
+
+## How to Contribute
 

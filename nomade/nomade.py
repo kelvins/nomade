@@ -2,8 +2,7 @@ import os
 import shutil
 from datetime import datetime
 
-from colorama import Fore
-
+import log
 import utils
 from settings import Settings
 from migration import Migration
@@ -18,22 +17,25 @@ class Nomade:
         """Init a Nomade project by creating the
         directories and copying the settings files.
         """
-        print(Fore.RESET + 'Creating Nomade project:')
-        print(Fore.GREEN + '.')
-        print('├─ nomade')
-        print('│  ├─ template.py')
-        print('│  └─ migrations')
-        print('└─ .nomade.yml')
-
-        os.makedirs(os.path.join('nomade', 'migrations'))
-        shutil.copyfile(
-            os.path.join('assets', '.nomade.yml'),
-            os.path.join('.', '.nomade.yml')
-        )
-        shutil.copyfile(
-            os.path.join('assets', 'template.py'),
-            os.path.join('nomade', 'template.py')
-        )
+        try:
+            os.makedirs(os.path.join('nomade', 'migrations'))
+            shutil.copyfile(
+                os.path.join('assets', '.nomade.yml'),
+                os.path.join('.', '.nomade.yml')
+            )
+            shutil.copyfile(
+                os.path.join('assets', 'template.py'),
+                os.path.join('nomade', 'template.py')
+            )
+        except FileExistsError:
+            log.error('Error: file already exists!')
+        else:
+            log.default('Initializing project:')
+            log.success('.')
+            log.success('├─ nomade')
+            log.success('│  ├─ template.py')
+            log.success('│  └─ migrations')
+            log.success('└─ .nomade.yml')
 
     @staticmethod
     def _sort_migrations(migrations):

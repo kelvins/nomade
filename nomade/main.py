@@ -1,14 +1,14 @@
 import click
 from colorama import Fore
 
+import log
 from nomade import Nomade
 from __init__ import __version__
 
 
 @click.group()
 def cli():
-    print(Fore.CYAN + f'Nomade ({__version__})\n')
-    pass
+    log.info(f'Nomade ({__version__})')
 
 
 @cli.command(help='Init the migration manager')

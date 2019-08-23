@@ -1,12 +1,13 @@
 import sqlalchemy as sa
+from sqlalchemy.ext.declarative import declarative_base
 
-Base = sa.ext.declarative.declarative_base()
+Base = declarative_base()
 Session = sa.orm.sessionmaker()
 
 
 class Nomade(Base):
     __tablename__ = 'nomade'
-    migration = sa.Column(sa.String)
+    migration = sa.Column(sa.String, primary_key=True)
 
     def __repr__(self):
         return f'<Nomade(migration={migration})>'

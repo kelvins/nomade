@@ -19,6 +19,10 @@ bumpversion = "^0.5.3"
 pytest-cov = "^2.7"
 flake8 = "^3.7"
 black = {version = "^18.3-alpha.0", allows-prereleases = true}
+
+[tool.poetry.scripts]
+nomade = 'nomade.main:cli'
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

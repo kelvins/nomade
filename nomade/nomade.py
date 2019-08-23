@@ -61,10 +61,34 @@ class Nomade:
         )
 
     def upgrade(self, steps):
-        raise NotImplementedError('Not implemented yet')
+        try:
+            steps = int(steps)
+        except ValueError:
+            if steps.strip().lower() == 'head':
+                steps = 9999999
+
+        start = False
+        curr_migration = self._get_current_migration()
+        for migration in Migration.get_migrations(self.settings):
+            if (migration.id == curr_migration or start) and steps > 0:
+                migration.upgrade()
+                start = True
+                steps -= 1
 
     def downgrade(self, steps):
-        raise NotImplementedError('Not implemented yet')
+        try:
+            steps = int(steps)
+        except ValueError:
+            if steps.strip().lower() == 'tail':
+                steps = 9999999
+
+        start = False
+        curr_migration = self._get_current_migration()
+        for migration in Migration.get_migrations(self.settings)[::-1]:
+            if (migration.id == curr_migration or start) and steps > 0:
+                migration.upgrade()
+                start = True
+                steps -= 1
 
     def history(self):
         # TODO: show the current migration
@@ -75,11 +99,17 @@ class Nomade:
             log.info(f'{migration.id}', end='')
             log.default(f': {migration.name} ({migration.date})')
 
-    def current(self):
+    def _get_current_migration(self):
         database = Database(self.settings.conn_str)
         try:
-            migration_id = database.read_migration().migration
+            return database.read_migration().migration
         except AttributeError:
+            return None
+
+    def current(self):
+        curr_migration = self._get_current_migration()
+
+        if curr_migration is None:
             log.error('No migrations found!')
             return
 

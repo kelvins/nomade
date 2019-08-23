@@ -2,11 +2,11 @@ import os
 import shutil
 from datetime import datetime
 
-import log
-import utils
-from settings import Settings
-from migration import Migration
-from database import Database
+from nomade import log
+from nomade import utils
+from nomade.settings import Settings
+from noamde.migration import Migration
+from nomade.database import Database
 
 
 class Nomade:

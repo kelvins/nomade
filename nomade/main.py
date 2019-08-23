@@ -1,9 +1,9 @@
 import click
 from colorama import Fore
 
-import log
-from nomade import Nomade
-from __init__ import __version__
+from nomade import log
+from nomade import nomade
+from nomade import __version__
 
 
 @click.group()
@@ -20,14 +20,14 @@ def version():
 @cli.command()
 def init():
     """Init a Nomade project."""
-    Nomade.init()
+    nomade.Nomade.init()
 
 
 @cli.command()
 @click.argument('name')
 def migrate(name):
     """Create a new migration."""
-    nomade = Nomade()
+    nomade = nomade.Nomade()
     nomade.migrate(name)
 
 
@@ -35,7 +35,7 @@ def migrate(name):
 @click.argument('steps', required=False)
 def upgrade(steps):
     """Upgrade migrations."""
-    nomade = Nomade()
+    nomade = nomade.Nomade()
     nomade.upgrade(steps)
 
 
@@ -43,21 +43,21 @@ def upgrade(steps):
 @click.argument('steps', required=False)
 def downgrade(steps):
     """Downgrade migrations."""
-    nomade = Nomade()
+    nomade = nomade.Nomade()
     nomade.downgrade(steps)
 
 
 @cli.command()
 def history():
     """Show migrations history."""
-    nomade = Nomade()
+    nomade = nomade.Nomade()
     nomade.history()
 
 
 @cli.command()
 def current():
     """Show the current migration."""
-    nomade = Nomade()
+    nomade = nomade.Nomade()
     nomade.current()
 
 

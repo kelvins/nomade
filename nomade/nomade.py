@@ -22,11 +22,11 @@ class Nomade:
             os.makedirs(os.path.join('nomade', 'migrations'))
             shutil.copyfile(
                 os.path.join('assets', '.nomade.yml'),
-                os.path.join('.', '.nomade.yml')
+                os.path.join('.', '.nomade.yml'),
             )
             shutil.copyfile(
                 os.path.join('assets', 'template.py'),
-                os.path.join('nomade', 'template.py')
+                os.path.join('nomade', 'template.py'),
             )
         except FileExistsError:
             log.error('Error: file already exists!')
@@ -53,7 +53,7 @@ class Nomade:
             id=utils.unique_id(),
             name=name,
             date=datetime.now().strftime(self.settings.date_fmt),
-            down_migration=down_migration
+            down_migration=down_migration,
         )
         migration.save(self.settings)
         log.success(
@@ -65,7 +65,7 @@ class Nomade:
             steps = int(steps)
         except ValueError:
             if steps.strip().lower() == 'head':
-                steps = 9999999
+                steps = 9_999_999
 
         start = False
         curr_migration = self._get_current_migration()
@@ -80,7 +80,7 @@ class Nomade:
             steps = int(steps)
         except ValueError:
             if steps.strip().lower() == 'tail':
-                steps = 9999999
+                steps = 9_999_999
 
         start = False
         curr_migration = self._get_current_migration()

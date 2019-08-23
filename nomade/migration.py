@@ -28,7 +28,7 @@ class Migration:
             date=date_time.strftime('%Y%m%d'),
             time=date_time.strftime('%H%M%S'),
             id=self.id,
-            slug=utils.slugify(self.name)
+            slug=utils.slugify(self.name),
         )
 
         # Add Python extension to the file name
@@ -43,7 +43,7 @@ class Migration:
             migration_name=self.name,
             migration_date=self.date,
             curr_migration=self.id,
-            down_migration=self.down_migration or ''
+            down_migration=self.down_migration or '',
         )
 
         file_path = os.path.join(settings.location, file_name)

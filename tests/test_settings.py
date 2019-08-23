@@ -6,7 +6,6 @@ from nomade.settings import Settings
 
 
 class TestSettings:
-
     def test_load_invalid_yaml_path(self):
         with pytest.raises(FileNotFoundError):
             Settings.load('invalid/path.yml')

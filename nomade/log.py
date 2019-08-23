@@ -7,7 +7,9 @@ def colorize(fore_color):
     def decorator(func):
         def wrapper(content):
             print(fore_color + content + Fore.RESET)
+
         return wrapper
+
     return decorator
 
 

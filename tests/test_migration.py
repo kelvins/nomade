@@ -8,7 +8,6 @@ from nomade.settings import Settings
 
 
 class TestMigration:
-
     def test_load_invalid_file_path(self):
         with pytest.raises(ModuleNotFoundError):
             Migration.load('invalid', 'file.py')
@@ -30,10 +29,7 @@ class TestMigration:
         settings.name_fmt = '{id}_{slug}'
 
         migration = Migration(
-            id='456',
-            name='Test Save',
-            date='01/01/2020',
-            down_migration='123'
+            id='456', name='Test Save', date='01/01/2020', down_migration='123'
         )
         migration.save(settings)
 

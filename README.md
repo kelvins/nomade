@@ -7,9 +7,6 @@
 ## Feature Support
 
 - Manage your database migrations regardless of the ORM.
-- Support for SQLite
-- Support for MySQL (comming soon)
-- Support for PostgreSQL (comming soon)
 
 ## Installation
 

@@ -6,6 +6,7 @@ import log
 import utils
 from settings import Settings
 from migration import Migration
+from database import Database
 
 
 class Nomade:
@@ -59,19 +60,33 @@ class Nomade:
             f'Migration ({migration.id}) {migration.name} successfully created'
         )
 
-    def upgrade(self):
+    def upgrade(self, steps):
         raise NotImplementedError('Not implemented yet')
 
-    def downgrade(self):
+    def downgrade(self, steps):
         raise NotImplementedError('Not implemented yet')
 
     def history(self):
+        # TODO: show the current migration
         migrations = Migration.get_migrations(self.settings)
         for migration in migrations:
             log.warning(f'{migration.down_migration.rjust(8)}', end='')
             log.default(' -> ', end='')
-            log.info(f'{migration.id}')
+            log.info(f'{migration.id}', end='')
             log.default(f': {migration.name} ({migration.date})')
 
     def current(self):
-        raise NotImplementedError('Not implemented yet')
+        database = Database(self.settings.conn_str)
+        try:
+            migration_id = database.read_migration().migration
+        except AttributeError:
+            log.error('No migrations found!')
+            return
+
+        for migration in Migration.get_migrations(self.settings):
+            if migration.id == migration_id:
+                log.default('Current migration:')
+                log.warning(f'{migration.down_migration.rjust(8)}', end='')
+                log.default(' -> ', end='')
+                log.info(f'{migration.id}', end='')
+                log.default(f': {migration.name} ({migration.date})')

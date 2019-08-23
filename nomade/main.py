@@ -8,41 +8,55 @@ from __init__ import __version__
 
 @click.group()
 def cli():
+    pass
+
+
+@cli.command()
+def version():
+    """Show Nomade version."""
     log.info(f'Nomade ({__version__})')
 
 
-@cli.command(help='Init the migration manager')
+@cli.command()
 def init():
+    """Init a Nomade project."""
     Nomade.init()
 
 
-@cli.command(help='Create a new migration')
+@cli.command()
 @click.argument('name')
 def migrate(name):
+    """Create a new migration."""
     nomade = Nomade()
     nomade.migrate(name)
 
 
-@cli.command(help='Upgrade migrations')
-def upgrade():
+@cli.command()
+@click.argument('steps', required=False)
+def upgrade(steps):
+    """Upgrade migrations."""
     nomade = Nomade()
-    nomade.upgrade()
+    nomade.upgrade(steps)
 
 
-@cli.command(help='Downgrade migrations')
-def downgrade():
+@cli.command()
+@click.argument('steps', required=False)
+def downgrade(steps):
+    """Downgrade migrations."""
     nomade = Nomade()
-    nomade.downgrade()
+    nomade.downgrade(steps)
 
 
-@cli.command(help='Show migrations history')
+@cli.command()
 def history():
+    """Show migrations history."""
     nomade = Nomade()
     nomade.history()
 
 
-@cli.command(help='Show the current migration')
+@cli.command()
 def current():
+    """Show the current migration."""
     nomade = Nomade()
     nomade.current()
 

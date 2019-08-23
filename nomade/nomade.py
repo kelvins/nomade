@@ -7,7 +7,7 @@ import click
 from nomade.constants import level
 from nomade import utils
 from nomade.settings import Settings
-from noamde.migration import Migration
+from nomade.migration import Migration
 from nomade.database import Database
 
 
@@ -20,14 +20,15 @@ class Nomade:
         """Init a Nomade project by creating the
         directories and copying the settings files.
         """
+        current_path = os.path.dirname(os.path.abspath(__file__))
         try:
             os.makedirs(os.path.join('nomade', 'migrations'))
             shutil.copyfile(
-                os.path.join('assets', '.nomade.yml'),
+                os.path.join(current_path, 'assets', '.nomade.yml'),
                 os.path.join('.', '.nomade.yml'),
             )
             shutil.copyfile(
-                os.path.join('assets', 'template.py'),
+                os.path.join(current_path, 'assets', 'template.py'),
                 os.path.join('nomade', 'template.py'),
             )
         except FileExistsError:

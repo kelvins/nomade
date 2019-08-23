@@ -1,7 +1,7 @@
 import click
 from colorama import Fore
 
-from nomade import log
+from nomade.constants import level
 from nomade import nomade
 from nomade import __version__
 
@@ -14,7 +14,7 @@ def cli():
 @cli.command()
 def version():
     """Show Nomade version."""
-    log.info(f'Nomade ({__version__})')
+    click.secho(f'Nomade ({__version__})', fg=level.INFO)
 
 
 @cli.command()

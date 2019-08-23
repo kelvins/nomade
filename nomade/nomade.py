@@ -2,7 +2,9 @@ import os
 import shutil
 from datetime import datetime
 
-from nomade import log
+import click
+
+from nomade.constants import level
 from nomade import utils
 from nomade.settings import Settings
 from noamde.migration import Migration
@@ -29,14 +31,14 @@ class Nomade:
                 os.path.join('nomade', 'template.py'),
             )
         except FileExistsError:
-            log.error('Error: file already exists!')
+            click.secho('Error: file already exists!', fg=level.ERROR)
         else:
-            log.default('Initializing project:')
-            log.success('.')
-            log.success('├─ nomade')
-            log.success('│  ├─ template.py')
-            log.success('│  └─ migrations')
-            log.success('└─ .nomade.yml')
+            click.secho('Initializing project:')
+            click.secho('.', fg=level.SUCCESS)
+            click.secho('├─ nomade', fg=level.SUCCESS)
+            click.secho('│  ├─ template.py', fg=level.SUCCESS)
+            click.secho('│  └─ migrations', fg=level.SUCCESS)
+            click.secho('└─ .nomade.yml', fg=level.SUCCESS)
 
     def migrate(self, name):
         """Create a new Nomade migration using the Migration class.
@@ -56,8 +58,9 @@ class Nomade:
             down_migration=down_migration,
         )
         migration.save(self.settings)
-        log.success(
-            f'Migration ({migration.id}) {migration.name} successfully created'
+        click.secho(
+            f'Migration ({migration.id}) {migration.name} successfully created',
+            fg=level.SUCCESS
         )
 
     def upgrade(self, steps):
@@ -94,10 +97,10 @@ class Nomade:
         # TODO: show the current migration
         migrations = Migration.get_migrations(self.settings)
         for migration in migrations:
-            log.warning(f'{migration.down_migration.rjust(8)}', end='')
-            log.default(' -> ', end='')
-            log.info(f'{migration.id}', end='')
-            log.default(f': {migration.name} ({migration.date})')
+            click.secho(f'{migration.down_migration.rjust(8)}', nl=False, fg=level.WARNING)
+            click.secho(' -> ', nl=False)
+            click.secho(f'{migration.id}', nl=False, fg=level.INFO)
+            click.secho(f': {migration.name} ({migration.date})')
 
     def _get_current_migration(self):
         database = Database(self.settings.conn_str)
@@ -110,13 +113,13 @@ class Nomade:
         curr_migration = self._get_current_migration()
 
         if curr_migration is None:
-            log.error('No migrations found!')
+            click.secho('No migrations found!', fg=level.ERROR)
             return
 
         for migration in Migration.get_migrations(self.settings):
             if migration.id == migration_id:
-                log.default('Current migration:')
-                log.warning(f'{migration.down_migration.rjust(8)}', end='')
-                log.default(' -> ', end='')
-                log.info(f'{migration.id}', end='')
-                log.default(f': {migration.name} ({migration.date})')
+                click.secho('Current migration:')
+                click.secho(f'{migration.down_migration.rjust(8)}', nl=False, fg=level.WARNING)
+                click.secho(' -> ', nl=False)
+                click.secho(f'{migration.id}', nl=False, fg=level.INFO)
+                click.secho(f': {migration.name} ({migration.date})')

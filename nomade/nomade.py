@@ -26,7 +26,9 @@ class Nomade:
         try:
             os.makedirs(os.path.join('nomade', 'migrations'))
             pathlib.Path(os.path.join('nomade', '__init__.py')).touch()
-            pathlib.Path(os.path.join('nomade/migrations', '__init__.py')).touch()
+            pathlib.Path(
+                os.path.join('nomade/migrations', '__init__.py')
+            ).touch()
             shutil.copyfile(
                 os.path.join(current_path, 'assets', '.nomade.yml'),
                 os.path.join('.', '.nomade.yml'),
@@ -64,8 +66,9 @@ class Nomade:
         )
         migration.save(self.settings)
         click.secho(
-            f'Migration "{migration.name}" ({migration.id}) successfully created!',
-            fg=level.SUCCESS
+            f'Migration "{migration.name}" '
+            f'({migration.id}) successfully created!',
+            fg=level.SUCCESS,
         )
 
     def _apply_migrations(self, steps, forward):
@@ -96,9 +99,11 @@ class Nomade:
                 started = True
 
             if started:
-                click.secho(f'Applying migration {migration.id}', fg=level.INFO)
+                click.secho(
+                    f'Applying migration {migration.id}', fg=level.INFO
+                )
                 migration.upgrade()
-                self.database.save_migration(migration_id)
+                self.database.save_migration(migration.id)
                 steps -= 1
                 if steps == 0:
                     break
@@ -118,11 +123,18 @@ class Nomade:
         curr_migration = self._get_current_migration()
         migrations = Migration.get_migrations(self.settings)
         for migration in migrations:
-            click.secho(f'{migration.down_migration.rjust(8)}', nl=False, fg=level.WARNING)
+            click.secho(
+                f'{migration.down_migration.rjust(8)}',
+                nl=False,
+                fg=level.WARNING,
+            )
             click.secho(' -> ', nl=False)
             click.secho(f'{migration.id}', nl=False, fg=level.INFO)
             if migration.id == curr_migration:
-                click.secho(f': {migration.name} ({migration.date}) (head)', fg=level.SUCCESS)
+                click.secho(
+                    f': {migration.name} ({migration.date}) (head)',
+                    fg=level.SUCCESS,
+                )
             else:
                 click.secho(f': {migration.name} ({migration.date})')
 
@@ -142,10 +154,18 @@ class Nomade:
         for migration in Migration.get_migrations(self.settings):
             if migration.id == curr_migration:
                 click.secho('Current migration:')
-                click.secho(f'{migration.down_migration.rjust(8)}', nl=False, fg=level.WARNING)
+                click.secho(
+                    f'{migration.down_migration.rjust(8)}',
+                    nl=False,
+                    fg=level.WARNING,
+                )
                 click.secho(' -> ', nl=False)
                 click.secho(f'{migration.id}', nl=False, fg=level.INFO)
                 click.secho(f': {migration.name} ({migration.date})')
                 break
         else:
-            click.secho(f'Migration {curr_migration} not found in the {self.settings.location}', fg=level.ERROR)
+            click.secho(
+                f'Migration {curr_migration} not found '
+                f'in the {self.settings.location}',
+                fg=level.ERROR,
+            )

@@ -2,6 +2,9 @@ install:
 	@pip install poetry
 	@poetry install
 
+isort:
+	@isort -rc nomade tests
+
 flake8:
 	@flake8 nomade tests
 

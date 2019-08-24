@@ -1,6 +1,6 @@
+import importlib
 import os
 import pkgutil
-import importlib
 from datetime import datetime
 
 from nomade import utils

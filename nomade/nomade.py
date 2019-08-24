@@ -1,15 +1,15 @@
 import os
-import shutil
 import pathlib
+import shutil
 from datetime import datetime
 
 import click
 
-from nomade.constants import level
 from nomade import utils
-from nomade.settings import Settings
-from nomade.migration import Migration
+from nomade.constants import level
 from nomade.database import Database
+from nomade.migration import Migration
+from nomade.settings import Settings
 
 
 class Nomade:

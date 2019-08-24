@@ -1,9 +1,7 @@
 import click
-from colorama import Fore
 
+from nomade import __version__, nomade
 from nomade.constants import level
-from nomade import nomade
-from nomade import __version__
 
 
 @click.group()

@@ -1,5 +1,5 @@
-DEBUG = 'yellow'
+DEBUG = 'white'
 INFO = 'cyan'
 SUCCESS = 'green'
-WARNING = 'magenta'
+WARNING = 'yellow'
 ERROR = 'red'

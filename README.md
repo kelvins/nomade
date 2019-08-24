@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/kelvins/nomade/blob/master/docs/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="300" height="169" />
+  <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="300" height="169" />
 </p>
 
 > Python Migration Manager for Humans :camel:

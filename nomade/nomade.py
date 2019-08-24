@@ -1,5 +1,6 @@
 import os
 import shutil
+import pathlib
 from datetime import datetime
 
 import click
@@ -23,6 +24,8 @@ class Nomade:
         current_path = os.path.dirname(os.path.abspath(__file__))
         try:
             os.makedirs(os.path.join('nomade', 'migrations'))
+            pathlib.Path(os.path.join('nomade', '__init__.py')).touch()
+            pathlib.Path(os.path.join('nomade/migrations', '__init__.py')).touch()
             shutil.copyfile(
                 os.path.join(current_path, 'assets', '.nomade.yml'),
                 os.path.join('.', '.nomade.yml'),
@@ -36,10 +39,10 @@ class Nomade:
         else:
             click.secho('Initializing project:')
             click.secho('.', fg=level.SUCCESS)
-            click.secho('├─ nomade', fg=level.SUCCESS)
-            click.secho('│  ├─ template.py', fg=level.SUCCESS)
-            click.secho('│  └─ migrations', fg=level.SUCCESS)
-            click.secho('└─ .nomade.yml', fg=level.SUCCESS)
+            click.secho('├── nomade', fg=level.SUCCESS)
+            click.secho('│   ├── template.py', fg=level.SUCCESS)
+            click.secho('│   └── migrations', fg=level.SUCCESS)
+            click.secho('└── .nomade.yml', fg=level.SUCCESS)
 
     def migrate(self, name):
         """Create a new Nomade migration using the Migration class.
@@ -48,7 +51,7 @@ class Nomade:
             name (str): A short migration name (e.g. Create user table).
         """
         try:
-            down_migration = Migration.get_migrations(self.settings)[-1]
+            down_migration = Migration.get_migrations(self.settings)[-1].id
         except IndexError:
             down_migration = ''
 
@@ -60,7 +63,7 @@ class Nomade:
         )
         migration.save(self.settings)
         click.secho(
-            f'Migration ({migration.id}) {migration.name} successfully created',
+            f'Migration "{migration.name}" ({migration.id}) successfully created!',
             fg=level.SUCCESS
         )
 

@@ -2,7 +2,7 @@
 
 Migration ID: {curr_migration}
 Revises: {down_migration}
-Created At: {migration_date}
+Created at: {migration_date}
 """
 
 # Nomade migration identifiers

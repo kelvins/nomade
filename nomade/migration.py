@@ -1,4 +1,5 @@
 import os
+import pkgutil
 import importlib
 from datetime import datetime
 
@@ -6,13 +7,15 @@ from nomade import utils
 
 
 class Migration:
-    def __init__(self, id, name, date, down_migration=None):
+    def __init__(
+        self, id, name, date, down_migration=None, upgrade=None, downgrade=None
+    ):
         self.id = id
         self.name = name
         self.date = date
         self.down_migration = down_migration
-        self.upgrade = None
-        self.downgrade = None
+        self.upgrade = upgrade
+        self.downgrade = downgrade
 
     def __repr__(self):
         return f'<Migration id={self.id}, down={self.down_migration}>'
@@ -61,19 +64,17 @@ class Migration:
         Returns:
             Return a Migration object containing the migration info.
         """
-        # importlib requires location splitted by dot
-        location = '.'.join(os.path.normpath(location).split(os.sep))
-
-        # If the file name came with the file extension, remove it
-        if file_name.endswith('.py'):
-            file_name = file_name[:-3]
-
-        module = importlib.import_module(f'{location}.{file_name}')
+        module_path = '.'.join(os.path.normpath(location).split(os.sep))
+        module_path += f'.{file_name}'
+        file_path = os.path.join(os.getcwd(), location, f'{file_name}.py')
+        spec = importlib.util.spec_from_file_location(module_path, file_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
         return Migration(
             id=module.curr_migration,
             name=module.migration_name,
             date=module.migration_date,
-            down_migration=module.down_migration or None,
+            down_migration=module.down_migration,
             upgrade=module.upgrade,
             downgrade=module.downgrade,
         )
@@ -94,7 +95,9 @@ class Migration:
     @classmethod
     def get_migrations(cls, settings):
         migrations = list()
-        for name in os.listdir(settings.location):
+        path = os.path.join(os.getcwd(), settings.location)
+        modules = pkgutil.iter_modules(path=[path])
+        for _, name, _ in modules:
             try:
                 migrations.append(Migration.load(settings.location, name))
             except AttributeError:

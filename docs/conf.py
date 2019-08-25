@@ -13,6 +13,8 @@
 import os
 import sys
 
+from nomade import __version__
+
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -23,7 +25,7 @@ copyright = '2019, Kelvin S. do Prado'
 author = 'Kelvin S. do Prado'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------

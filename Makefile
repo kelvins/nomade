@@ -16,3 +16,7 @@ code-check: flake8
 
 runtests:
 	@pytest -vv --cov-report term-missing --cov=nomade tests/
+
+documentation:
+	@sphinx-apidoc -f -o docs nomade
+	@(cd docs; make html)

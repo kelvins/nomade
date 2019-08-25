@@ -12,7 +12,7 @@ from nomade.migration import Migration
 from nomade.settings import Settings
 
 
-class Nomade:
+class Nomad:
     def __init__(self, settings_path='.nomade.yml'):
         self.settings = Settings.load(settings_path)
         self.database = Database(self.settings.conn_str)

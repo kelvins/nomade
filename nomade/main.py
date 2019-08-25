@@ -1,7 +1,8 @@
 import click
 
-from nomade import __version__, nomade
+from nomade import __version__
 from nomade.constants import level
+from nomade.nomad import Nomad
 
 
 @click.group()
@@ -26,7 +27,7 @@ def init():
     Example:\n
         nomade init
     """
-    nomade.Nomade.init()
+    Nomad.init()
 
 
 @cli.command()
@@ -37,7 +38,7 @@ def migrate(name):
     Example:\n
         nomade migrate "Create X table"
     """
-    nomade.Nomade().migrate(name)
+    Nomad().migrate(name)
 
 
 @cli.command()
@@ -49,7 +50,7 @@ def upgrade(steps):
         nomade upgrade 1\n
         nomade upgrade head
     """
-    nomade.Nomade().upgrade(steps)
+    Nomad().upgrade(steps)
 
 
 @cli.command()
@@ -61,7 +62,7 @@ def downgrade(steps):
         nomade downgrade 1\n
         nomade downgrade tail
     """
-    nomade.Nomade().downgrade(steps)
+    Nomad().downgrade(steps)
 
 
 @cli.command()
@@ -71,7 +72,7 @@ def history():
     Example:\n
         nomade history
     """
-    nomade.Nomade().history()
+    Nomad().history()
 
 
 @cli.command()
@@ -81,7 +82,7 @@ def current():
     Example:\n
         nomade current
     """
-    nomade.Nomade().current()
+    Nomad().current()
 
 
 if __name__ == '__main__':

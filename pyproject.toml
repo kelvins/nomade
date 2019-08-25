@@ -20,6 +20,7 @@ pytest-cov = "^2.7"
 flake8 = "^3.7"
 black = {version = "^18.3-alpha.0", allows-prereleases = true}
 isort = "^4.3"
+sphinx = "^2.2"
 
 [tool.poetry.scripts]
 nomade = 'nomade.main:cli'

@@ -8,20 +8,26 @@ from nomade.settings import Settings
 
 
 class TestMigration:
+    @classmethod
+    def setup_class(cls):
+        os.mkdir(os.path.join('tests', 'migrations'))
+
+    @classmethod
+    def teardown_class(cls):
+        shutil.rmtree('tests/migrations')
+
     def test_load_invalid_file_path(self):
-        with pytest.raises(ModuleNotFoundError):
-            Migration.load('invalid', 'file.py')
+        with pytest.raises(FileNotFoundError):
+            Migration.load('invalid', 'file')
 
     def test_load_valid_file(self):
-        migration = Migration.load('tests.assets', 'migration_001.py')
+        migration = Migration.load('tests/assets', 'migration_001')
         assert migration.id == 'R2D2'
         assert migration.name == 'Migration 001'
         assert migration.date == '01/01/2001'
         assert migration.down_migration == 'C3PO'
 
     def test_save_valid_migration(self):
-        os.mkdir(os.path.join('tests', 'migrations'))
-
         settings = Settings()
         settings.location = 'tests/migrations'
         settings.template = 'tests/assets/template.py'
@@ -33,10 +39,8 @@ class TestMigration:
         )
         migration.save(settings)
 
-        migration = Migration.load('tests.migrations', '456_test_save.py')
+        migration = Migration.load('tests/migrations', '456_test_save')
         assert migration.id == '456'
         assert migration.name == 'Test Save'
         assert migration.date == '01/01/2020'
         assert migration.down_migration == '123'
-
-        shutil.rmtree('tests/migrations')

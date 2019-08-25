@@ -93,7 +93,7 @@ class Nomad:
             return
 
         started = False
-        curr_migration = self._get_current_migration()
+        curr_migration = self.database.migration_id
         for migration in migrations:
             if curr_migration is None:
                 started = True
@@ -103,7 +103,7 @@ class Nomad:
                     f'Applying migration {migration.id}', fg=level.INFO
                 )
                 migration.upgrade()
-                self.database.save_migration(migration.id)
+                self.database.migration_id = migration.id
                 steps -= 1
                 if steps == 0:
                     break
@@ -120,7 +120,7 @@ class Nomad:
         self._apply_migrations(steps, forward=False)
 
     def history(self):
-        curr_migration = self._get_current_migration()
+        curr_migration = self.database.migration_id
         migrations = Migration.get_migrations(self.settings)
         for migration in migrations:
             click.secho(
@@ -138,14 +138,8 @@ class Nomad:
             else:
                 click.secho(f': {migration.name} ({migration.date})')
 
-    def _get_current_migration(self):
-        try:
-            return self.database.read_migration().migration
-        except AttributeError:
-            return None
-
     def current(self):
-        curr_migration = self._get_current_migration()
+        curr_migration = self.database.migration_id
 
         if curr_migration is None:
             click.secho('No migrations found!', fg=level.WARNING)

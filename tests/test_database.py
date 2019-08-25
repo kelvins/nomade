@@ -1,7 +1,7 @@
 import pytest
 import sqlalchemy as sa
 
-from nomade.database import Database, Nomade
+from nomade.database import Database
 
 
 class TestDatabase:
@@ -15,6 +15,6 @@ class TestDatabase:
 
     def test_database_save_and_read_migration(self):
         database = Database('sqlite:///:memory:')
-        assert database.read_migration() == None
-        database.save_migration('test123')
-        assert database.read_migration().migration == 'test123'
+        assert database.migration_id == None
+        database.migration_id = 'test123'
+        assert database.migration_id == 'test123'

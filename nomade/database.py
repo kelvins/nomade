@@ -21,7 +21,10 @@ def session_scope():
         session.close()
 
 
-class Nomade(Base):
+class NomadeModel(Base):
+    """Nomade model class representing the nomade
+    table that will be stored in the database.
+    """
     __tablename__ = 'nomade'
     migration = sa.Column(sa.String, primary_key=True)
 
@@ -30,17 +33,45 @@ class Nomade(Base):
 
 
 class Database:
+    """Class responsible for dealing with simple database operations.
+    (e.g. get migration ID, set current migration ID).
+    """
     def __init__(self, connection_string):
-        self.engine = sa.create_engine(connection_string)
-        Session.configure(bind=self.engine)
-        Base.metadata.create_all(self.engine)
+        engine = sa.create_engine(connection_string)
+        Session.configure(bind=engine)
+        Base.metadata.create_all(engine)
 
-    def read_migration(self):
-        with session_scope() as session:
-            return session.query(Nomade).first()
+    def _nomade_model(self):
+        """Get the current migration from the database.
 
-    def save_migration(self, migration_id):
-        nomade = self.read_migration() or Nomade()
-        nomade.migration = migration_id
+        Returns:
+            NomadeModel: Return a NomadeModel object.
+            Return None if no record was found.
+        """
         with session_scope() as session:
-            session.add(nomade)
+            return session.query(NomadeModel).first()
+
+    @property
+    def migration_id(self):
+        """Get the current migration ID.
+
+        Returns:
+            str: Return the current migration ID.
+            Return None if no record was found.
+        """
+        try:
+            return self._nomade_model().migration
+        except AttributeError:
+            return None
+
+    @migration_id.setter
+    def migration_id(self, id):
+        """Insert or Update the current model ID in the database.
+
+        Args:
+            id (str): Migration ID do be saved in the database.
+        """
+        nomade_model = self._nomade_model() or NomadeModel()
+        nomade_model.migration = id
+        with session_scope() as session:
+            session.add(nomade_model)

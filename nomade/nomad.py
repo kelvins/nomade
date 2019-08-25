@@ -153,19 +153,15 @@ class Nomad:
 
         for migration in Migration.get_migrations(self.settings):
             if migration.id == curr_migration:
-                click.secho('Current migration:')
+                click.secho('(head) ', nl=False, fg=level.INFO)
                 click.secho(
-                    f'{migration.down_migration.rjust(8)}',
-                    nl=False,
-                    fg=level.WARNING,
+                    f'Migartion "{migration.name}" ({migration.id}) '
+                    f'created at {migration.date}'
                 )
-                click.secho(' -> ', nl=False)
-                click.secho(f'{migration.id}', nl=False, fg=level.INFO)
-                click.secho(f': {migration.name} ({migration.date})')
-                break
-        else:
-            click.secho(
-                f'Migration {curr_migration} not found '
-                f'in the {self.settings.location}',
-                fg=level.ERROR,
-            )
+                return
+
+        click.secho(
+            f'Migration {curr_migration} not found '
+            f'in the {self.settings.location}',
+            fg=level.ERROR,
+        )

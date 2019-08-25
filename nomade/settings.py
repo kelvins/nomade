@@ -5,17 +5,18 @@ class Settings:
     """Settings class responsible for dealing with YAML files."""
 
     @staticmethod
-    def load(path):
-        """Load the settings from a YAML file.
+    def load(file_path):
+        """Factory method responsible for loading settings
+        from a YAML file.
 
         Args:
-            path (str): path for the YAML file.
+            file_path (str): path to the YAML file.
 
         Returns:
-            Return a Settings object with the attributes
-            from the YAML file.
+            Settings: Return a Settings object with the
+            attributes loaded from the YAML file.
         """
-        with open(path, 'r') as yaml_file:
+        with open(file_path, 'r') as yaml_file:
             data = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
         settings = Settings()

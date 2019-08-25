@@ -14,4 +14,5 @@ def test_slugify_with_special_chars():
 
 
 def test_unique_id():
-    assert utils.unique_id() != utils.unique_id()
+    for _ in range(100):
+        assert utils.unique_id() != utils.unique_id()

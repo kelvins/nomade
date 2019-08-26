@@ -101,11 +101,13 @@ class Nomad:
 
             if started:
                 click.secho(
-                    f'Applying migration {migration.id}', fg=level.INFO
+                    f'[{migration.id}] Applying "{migration.name}"... ',
+                    nl=False
                 )
                 migration.upgrade()
                 self.database.migration_id = migration.id
                 steps -= 1
+                click.secho('[DONE]', fg=level.SUCCESS)
                 if steps == 0:
                     break
             elif migration.id == curr_migration:

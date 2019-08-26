@@ -1,13 +1,15 @@
-"""Migration 001 (01/01/2001)
+"""Migration 001
 
-Migration R2D2 revises C3PO.
+Migration ID: 123
+Revises:
+Created at: 01/01/2001
 """
 
 # Nomade migration identifiers
 migration_name = 'Migration 001'
 migration_date = '01/01/2001'
-curr_migration = 'R2D2'
-down_migration = 'C3PO'
+curr_migration = '123'
+down_migration = ''
 
 
 def upgrade():

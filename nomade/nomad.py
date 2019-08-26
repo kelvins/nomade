@@ -9,6 +9,7 @@ from nomade import utils
 from nomade.constants import level
 from nomade.database import Database
 from nomade.migration import Migration
+from nomade.migrations import Migrations
 from nomade.settings import Settings
 
 
@@ -54,7 +55,7 @@ class Nomad:
             name (str): A short migration name (e.g. Create user table).
         """
         try:
-            down_migration = Migration.get_migrations(self.settings)[-1].id
+            down_migration = Migrations(self.settings)[-1].id
         except IndexError:
             down_migration = ''
 
@@ -72,7 +73,7 @@ class Nomad:
         )
 
     def _apply_migrations(self, steps, forward):
-        migrations = Migration.get_migrations(self.settings)
+        migrations = Migrations(self.settings)
 
         max_steps = 'head'
         if not forward:
@@ -121,7 +122,7 @@ class Nomad:
 
     def history(self):
         curr_migration = self.database.migration_id
-        migrations = Migration.get_migrations(self.settings)
+        migrations = Migrations(self.settings)
         for migration in migrations:
             click.secho(
                 f'{migration.down_migration.rjust(8)}',
@@ -145,7 +146,7 @@ class Nomad:
             click.secho('No migrations found!', fg=level.WARNING)
             return
 
-        for migration in Migration.get_migrations(self.settings):
+        for migration in Migrations(self.settings):
             if migration.id == curr_migration:
                 click.secho('(head) ', nl=False, fg=level.INFO)
                 click.secho(

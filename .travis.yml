@@ -7,8 +7,7 @@ cache:
   pip: true
 
 install:
-  - pip install poetry
-  - poetry install
+  - make install
 
 script:
   - make codecheck

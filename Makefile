@@ -11,7 +11,7 @@ flake8:
 black:
 	@black nomade tests -S -l 79
 
-code-check: flake8
+codecheck: flake8
 	@black nomade tests --check -S -l 79
 
 runtests:

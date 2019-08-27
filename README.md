@@ -37,19 +37,19 @@ Set the settings in the `.nomade.yml` file.
 Then, create your first migration:
 
 ```bash
-nomade migrate "My first migration"
+$ nomade migrate "My first migration"
 ```
 
 Then apply the migration to the database:
 
 ```bash
-nomade upgrade head
+$ nomade upgrade head
 ```
 
 To discover more Nomade features please read the documentation or run:
 
 ```bash
-nomade --help
+$ nomade --help
 ```
 
 ## Documentation

@@ -1,5 +1,4 @@
 import os
-import pathlib
 import shutil
 from datetime import datetime
 
@@ -26,10 +25,6 @@ class Nomad:
         current_path = os.path.dirname(os.path.abspath(__file__))
         try:
             os.makedirs(os.path.join('nomade', 'migrations'))
-            pathlib.Path(os.path.join('nomade', '__init__.py')).touch()
-            pathlib.Path(
-                os.path.join('nomade/migrations', '__init__.py')
-            ).touch()
             shutil.copyfile(
                 os.path.join(current_path, 'assets', '.nomade.yml'),
                 os.path.join('.', '.nomade.yml'),
@@ -42,11 +37,11 @@ class Nomad:
             click.secho('Error: file already exists!', fg=level.ERROR)
         else:
             click.secho('Initializing project:')
-            click.secho('.', fg=level.INFO)
-            click.secho('├── nomade', fg=level.INFO)
-            click.secho('│   ├── template.py', fg=level.INFO)
-            click.secho('│   └── migrations', fg=level.INFO)
-            click.secho('└── .nomade.yml', fg=level.INFO)
+            click.secho('.')
+            click.secho('├── nomade')
+            click.secho('│   ├── template.py')
+            click.secho('│   └── migrations')
+            click.secho('└── .nomade.yml')
 
     def migrate(self, name):
         """Create a new Nomade migration using the Migration class.
@@ -66,11 +61,9 @@ class Nomad:
             down_migration=down_migration,
         )
         migration.save(self.settings)
-        click.secho(
-            f'Migration "{migration.name}" '
-            f'({migration.id}) successfully created!',
-            fg=level.SUCCESS,
-        )
+        click.secho('Migration "', nl=False)
+        click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+        click.secho(f'" ({migration.id}) successfully created!')
 
     def _apply_migrations(self, steps, forward):
         migrations = Migrations(self.settings)
@@ -86,11 +79,11 @@ class Nomad:
             if steps.strip().lower() == max_steps:
                 steps = len(migrations)
             else:
-                click.secho(f'Invalid step {steps}', fg=level.ERROR)
+                click.secho(f'Error: invalid step {steps}', fg=level.ERROR)
                 return
 
         if steps <= 0:
-            click.secho(f'Invalid step {steps}', fg=level.ERROR)
+            click.secho(f'Error: invalid step {steps}', fg=level.ERROR)
             return
 
         started = False
@@ -100,10 +93,9 @@ class Nomad:
                 started = True
 
             if started:
-                click.secho(
-                    f'[{migration.id}] Applying "{migration.name}"... ',
-                    nl=False
-                )
+                click.secho(f'[{migration.id}] Applying "', nl=False)
+                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+                click.secho('"... ', nl=False)
                 migration.upgrade()
                 self.database.migration_id = migration.id
                 steps -= 1

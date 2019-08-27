@@ -4,53 +4,52 @@
 
 > Python Migration Manager for Humans :camel:
 
-## Feature Support
-
-- Manage your database migrations regardless of the ORM.
+Nomade is a simple migration manager tool that aims to be easy to integrate with any ORM.
 
 ## Installation
 
 Use [pip](https://pip.pypa.io/en/stable/installing/) to install Nomade:
 
 ```bash
-pip install nomade
+$ pip install nomade
 ```
 
 ## Quick Start
 
-Initialize a Nomade project with:
+Initialize a Nomade project:
 
 ```bash
-nomade init
+$ nomade init
 ```
 
-It will create the migrations folder, the migration template and the nomade YAML file.
+It will create the following project structure:
 
-Configure the `.nomade.yml` file by setting the database connection string.
-
-To create a new migration use:
-
-```bash
-nomade migrate "Create table XYZ"
+```
+.
+├── nomade
+│   ├── template.py
+│   └── migrations
+└── .nomade.yml
 ```
 
-Manually edit the migration as you like and upgrade your database with:
+Set the settings in the `.nomade.yml` file.
+
+Then, create your first migration:
 
 ```bash
-nomade upgrade
+nomade migrate "My first migration"
 ```
 
-If needed you can downgrade to a previous version with:
+Then apply the migration to the database:
 
 ```bash
-nomade downgrade
+nomade upgrade head
 ```
 
-To check your current database migration or to check the migration history use the following commands:
+To discover more Nomade features please read the documentation or run:
 
 ```bash
-nomade current
-nomade history
+nomade --help
 ```
 
 ## Documentation
@@ -59,5 +58,5 @@ Comming soon
 
 ## How to Contribute
 
-Comming soon
-
+- Check for open issues or open a fresh one to start a discussion around a feature idea or a bug.
+- Become more familiar with the project by reading the [Contributor's Guide](CONTRIBUTING.rst).

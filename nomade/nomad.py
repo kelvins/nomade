@@ -20,28 +20,28 @@ class Nomad:
     @staticmethod
     def init():
         """Init a Nomade project by creating the
-        directories and copying the settings files.
+        directories and copying the necessary files.
         """
-        current_path = os.path.dirname(os.path.abspath(__file__))
         try:
             os.makedirs(os.path.join('nomade', 'migrations'))
-            shutil.copyfile(
-                os.path.join(current_path, 'assets', '.nomade.yml'),
-                os.path.join('.', '.nomade.yml'),
-            )
-            shutil.copyfile(
-                os.path.join(current_path, 'assets', 'template.py'),
-                os.path.join('nomade', 'template.py'),
-            )
         except FileExistsError:
-            click.secho('Error: file already exists!', fg=level.ERROR)
-        else:
-            click.secho('Initializing project:')
-            click.secho('.')
-            click.secho('├── nomade')
-            click.secho('│   ├── template.py')
-            click.secho('│   └── migrations')
-            click.secho('└── .nomade.yml')
+            pass
+
+        current_path = os.path.dirname(os.path.abspath(__file__))
+        shutil.copyfile(
+            os.path.join(current_path, 'assets', '.nomade.yml'),
+            os.path.join('.', '.nomade.yml'),
+        )
+        shutil.copyfile(
+            os.path.join(current_path, 'assets', 'template.py'),
+            os.path.join('nomade', 'template.py'),
+        )
+        click.secho('Initializing project:')
+        click.secho('.')
+        click.secho('├── nomade')
+        click.secho('│   ├── template.py')
+        click.secho('│   └── migrations')
+        click.secho('└── .nomade.yml')
 
     def migrate(self, name):
         """Create a new Nomade migration using the Migration class.
@@ -65,92 +65,114 @@ class Nomad:
         click.secho(f'{migration.name}', nl=False, fg=level.INFO)
         click.secho(f'" ({migration.id}) successfully created!')
 
-    def _apply_migrations(self, steps, forward):
-        migrations = Migrations(self.settings)
+    @staticmethod
+    def _steps_to_int(steps, keyword, max_steps):
+        """Convert the steps argument to a integer value.
 
-        max_steps = 'head'
-        if not forward:
-            migrations = migrations[::-1]
-            max_steps = 'tail'
+        Args:
+            steps (str): the steps argument passed by user.
+            keyword (str): the keyword 'head' or 'tail'.
+            max_steps (int): the maximum number of valid migrations.
 
+        Returns:
+            int: Return the 'steps' value as integer.
+            Return 0 if 'steps' is invalid.
+        """
+        if steps.strip().lower() == keyword:
+            return max_steps
         try:
-            steps = int(steps)
+            return int(steps)
         except ValueError:
-            if steps.strip().lower() == max_steps:
-                steps = len(migrations)
-            else:
-                click.secho(f'Error: invalid step {steps}', fg=level.ERROR)
-                return
+            return 0
 
+    def _apply_migrations(self, migrations, steps):
+        """Apply migrations to the database.
+
+        Args:
+            migrations (list): list of migrations.
+            steps (int): steps to apply migrations.
+        """
         if steps <= 0:
-            click.secho(f'Error: invalid step {steps}', fg=level.ERROR)
+            click.secho('Error: invalid step value', fg=level.ERROR)
             return
 
-        started = False
-        curr_migration = self.database.migration_id
-        for migration in migrations:
-            if curr_migration is None:
-                started = True
+        migration_id = self.database.migration_id
+        start_migration = True if migration_id is None else False
 
-            if started:
+        for migration in migrations:
+            if migration.id == migration_id:
+                start_migration = True
+
+            if start_migration:
                 click.secho(f'[{migration.id}] Applying "', nl=False)
                 click.secho(f'{migration.name}', nl=False, fg=level.INFO)
                 click.secho('"... ', nl=False)
                 migration.upgrade()
                 self.database.migration_id = migration.id
-                steps -= 1
                 click.secho('[DONE]', fg=level.SUCCESS)
-                if steps == 0:
-                    break
-            elif migration.id == curr_migration:
-                started = True
+                steps -= 1
 
-        if not started:
-            click.secho('No migrations to be applied!', fg=level.WARNING)
+            if steps == 0:
+                break
+
+        if not start_migration:
+            click.secho('No migrations to apply!', fg=level.WARNING)
 
     def upgrade(self, steps):
-        self._apply_migrations(steps, forward=True)
+        """Upgrade migrations based on steps.
+
+        Args:
+            steps (str): steps may 'head' or a number.
+        """
+        migrations = Migrations(self.settings)
+        steps = self._steps_to_int(steps, 'head', len(migrations))
+        self._apply_migrations(migrations, steps)
 
     def downgrade(self, steps):
-        self._apply_migrations(steps, forward=False)
+        """Downgrade migrations based on steps.
+
+        Args:
+            steps (str): steps may 'tail' or a number.
+        """
+        migrations = Migrations(self.settings)[::-1]
+        steps = self._steps_to_int(steps, 'tail', len(migrations))
+        self._apply_migrations(migrations, steps)
 
     def history(self):
-        curr_migration = self.database.migration_id
-        migrations = Migrations(self.settings)
-        for migration in migrations:
+        """Show a list of all migrations."""
+        migration_id = self.database.migration_id
+
+        for migration in Migrations(self.settings):
+            down_migration = migration.down_migration or 'Start'
             click.secho(
-                f'{migration.down_migration.rjust(8)}',
-                nl=False,
-                fg=level.WARNING,
+                f'{down_migration.rjust(8)}', nl=False, fg=level.WARNING
             )
             click.secho(' -> ', nl=False)
             click.secho(f'{migration.id}', nl=False, fg=level.INFO)
-            if migration.id == curr_migration:
-                click.secho(
-                    f': {migration.name} ({migration.date}) (head)',
-                    fg=level.SUCCESS,
-                )
+            click.secho(f': {migration.name} ({migration.date})', nl=False)
+
+            # Show the (head) suffix to the current migration
+            if migration.id == migration_id:
+                click.secho(' (head)', fg=level.SUCCESS)
             else:
-                click.secho(f': {migration.name} ({migration.date})')
+                click.secho('')
 
     def current(self):
-        curr_migration = self.database.migration_id
-
-        if curr_migration is None:
+        """Show the current migration."""
+        migration_id = self.database.migration_id
+        if migration_id is None:
             click.secho('No migrations found!', fg=level.WARNING)
             return
 
         for migration in Migrations(self.settings):
-            if migration.id == curr_migration:
-                click.secho('(head) ', nl=False, fg=level.INFO)
-                click.secho(
-                    f'Migartion "{migration.name}" ({migration.id}) '
-                    f'created at {migration.date}'
-                )
+            if migration.id == migration_id:
+                click.secho(f'[{migration.id}] Migration "', nl=False)
+                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+                click.secho(f'" created at {migration.date}', nl=False)
+                click.secho('(head)', fg=level.SUCCESS)
                 return
 
         click.secho(
-            f'Migration {curr_migration} not found '
-            f'in the {self.settings.location}',
+            f'Migration {migration_id} not found in {self.settings.location}',
             fg=level.ERROR,
         )

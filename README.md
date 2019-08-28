@@ -52,10 +52,6 @@ To discover more Nomade features please read the documentation or run:
 $ nomade --help
 ```
 
-## Documentation
-
-Comming soon
-
 ## How to Contribute
 
 - Check for open issues or open a fresh one to start a discussion around a feature idea or a bug.

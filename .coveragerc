@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = nomade
+omit = nomade/main.py
+
+[report]
+fail_under = 80
+show_missing = True
+ignore_errors = True
+sort = Miss
+exclude_lines = pragma: no cover

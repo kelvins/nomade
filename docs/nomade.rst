@@ -28,10 +28,18 @@ nomade.migration module
    :undoc-members:
    :show-inheritance:
 
-nomade.nomade module
---------------------
+nomade.migrations module
+------------------------
 
-.. automodule:: nomade.nomade
+.. automodule:: nomade.migrations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+nomade.nomad module
+-------------------
+
+.. automodule:: nomade.nomad
    :members:
    :undoc-members:
    :show-inheritance:

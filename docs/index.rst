@@ -9,23 +9,20 @@
    :align: center
    :width: 300
 
+Introduction
+============
+
 Python Migration Manager for Humans.
 
+Nomade is a simple migration manager tool that aims to be easy to integrate with any ORM.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   installation
    quickstart
-   testing
-   contributing
+   commands
+   Contributing <contributing>
    changelog
+   modules
 
-Modules
--------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   nomade

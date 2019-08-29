@@ -45,11 +45,12 @@ class Database:
         """Get the current migration from the database.
 
         Returns:
-            NomadeModel: Return a NomadeModel object.
-            Return None if no record was found.
+            NomadeModel: Return the NomadeModel object representing
+            the migration from the database, if no migration was found
+            return a new NomadeModel object.
         """
         with session_scope() as session:
-            return session.query(NomadeModel).first()
+            return session.query(NomadeModel).first() or NomadeModel()
 
     @property
     def migration_id(self):
@@ -59,10 +60,7 @@ class Database:
             str: Return the current migration ID.
             Return None if no record was found.
         """
-        try:
-            return self._nomade_model().migration
-        except AttributeError:
-            return None
+        return self._nomade_model().migration or None
 
     @migration_id.setter
     def migration_id(self, id):
@@ -71,7 +69,13 @@ class Database:
         Args:
             id (str): Migration ID do be saved in the database.
         """
-        nomade_model = self._nomade_model() or NomadeModel()
+        nomade_model = self._nomade_model()
         nomade_model.migration = id
         with session_scope() as session:
-            session.add(nomade_model)
+            if nomade_model.migration:
+                session.add(nomade_model)
+            else:
+                try:
+                    session.delete(nomade_model)
+                except sa.exc.InvalidRequestError:
+                    pass

@@ -36,7 +36,9 @@ class Nomad:
             os.path.join(current_path, 'assets', 'template.py'),
             os.path.join('nomade', 'template.py'),
         )
-        click.secho('Initializing project:')
+        click.secho('Initializing ', nl=False)
+        click.secho('Nomade', nl=False, fg=level.INFO)
+        click.secho(' project:')
         click.secho('.')
         click.secho('├── nomade')
         click.secho('│   ├── template.py')
@@ -85,39 +87,6 @@ class Nomad:
         except ValueError:
             return 0
 
-    def _apply_migrations(self, migrations, steps):
-        """Apply migrations to the database.
-
-        Args:
-            migrations (list): list of migrations.
-            steps (int): steps to apply migrations.
-        """
-        if steps <= 0:
-            click.secho('Error: invalid step value', fg=level.ERROR)
-            return
-
-        migration_id = self.database.migration_id
-        start_migration = True if migration_id is None else False
-
-        for migration in migrations:
-            if migration.id == migration_id:
-                start_migration = True
-
-            if start_migration:
-                click.secho(f'[{migration.id}] Applying "', nl=False)
-                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
-                click.secho('"... ', nl=False)
-                migration.upgrade()
-                self.database.migration_id = migration.id
-                click.secho('[DONE]', fg=level.SUCCESS)
-                steps -= 1
-
-            if steps == 0:
-                break
-
-        if not start_migration:
-            click.secho('No migrations to apply!', fg=level.WARNING)
-
     def upgrade(self, steps):
         """Upgrade migrations based on steps.
 
@@ -126,7 +95,7 @@ class Nomad:
         """
         migrations = Migrations(self.settings)
         steps = self._steps_to_int(steps, 'head', len(migrations))
-        self._apply_migrations(migrations, steps)
+        migrations.upgrade(steps)
 
     def downgrade(self, steps):
         """Downgrade migrations based on steps.
@@ -134,9 +103,9 @@ class Nomad:
         Args:
             steps (str): steps may 'tail' or a number.
         """
-        migrations = Migrations(self.settings)[::-1]
+        migrations = Migrations(self.settings)
         steps = self._steps_to_int(steps, 'tail', len(migrations))
-        self._apply_migrations(migrations, steps)
+        migrations.downgrade(steps)
 
     def history(self):
         """Show a list of all migrations."""
@@ -160,7 +129,7 @@ class Nomad:
     def current(self):
         """Show the current migration."""
         migration_id = self.database.migration_id
-        if migration_id is None:
+        if not migration_id:
             click.secho('No migrations found!', fg=level.WARNING)
             return
 
@@ -168,7 +137,7 @@ class Nomad:
             if migration.id == migration_id:
                 click.secho(f'[{migration.id}] Migration "', nl=False)
                 click.secho(f'{migration.name}', nl=False, fg=level.INFO)
-                click.secho(f'" created at {migration.date}', nl=False)
+                click.secho(f'" created at {migration.date} ', nl=False)
                 click.secho('(head)', fg=level.SUCCESS)
                 return
 

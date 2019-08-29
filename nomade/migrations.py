@@ -1,6 +1,11 @@
+import functools
 import os
 import pkgutil
 
+import click
+
+from nomade.constants import level
+from nomade.database import Database
 from nomade.migration import Migration
 
 
@@ -12,6 +17,7 @@ class Migrations:
     """
     def __init__(self, settings):
         self.settings = settings
+        self.database = Database(self.settings.conn_str)
         self._migrations = self._load(self.settings)
         self.sort()
 
@@ -52,3 +58,86 @@ class Migrations:
             except AttributeError:
                 pass
         return migrations
+
+    def apply_migrations(func):
+        @functools.wraps(func)
+        def wrapper(self, steps):
+            if steps <= 0:
+                click.secho('Error: invalid step value', fg=level.ERROR)
+                return
+            if not func(self, steps):
+                click.secho('No migrations to apply!', fg=level.WARNING)
+        return wrapper
+
+    @apply_migrations
+    def upgrade(self, steps):
+        """Upgrade migrations based on steps.
+
+        Args:
+            steps (int): the number of steps do upgrade.
+
+        Return:
+            bool: Return a flag stating if migrations have been applied.
+        """
+        migration_id = self.database.migration_id
+        init_migrations = not bool(migration_id)
+
+        for migration in self:
+            # Found the current migration, let's apply the next one
+            if migration.id == migration_id:
+                init_migrations = True
+                continue
+
+            if init_migrations:
+                click.secho(
+                    f'[{migration.id}] Upgrading migration "', nl=False
+                )
+                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+                click.secho('"... ', nl=False)
+
+                migration.upgrade()
+                self.database.migration_id = migration.id
+
+                click.secho('[DONE]', fg=level.SUCCESS)
+
+                steps -= 1
+                if steps == 0:
+                    break
+
+        return init_migrations
+
+    @apply_migrations
+    def downgrade(self, steps):
+        """Downgrade migrations based on steps.
+
+        Args:
+            steps (int): the number of steps do downgrade.
+
+        Return:
+            bool: Return a flag stating if migrations have been applied.
+        """
+        migration_id = self.database.migration_id
+        init_migrations = not bool(migration_id)
+
+        # Run migrations in reverse order for downgrade
+        for migration in self[::-1]:
+            if migration.id == migration_id:
+                init_migrations = True
+
+            if init_migrations:
+                click.secho(
+                    f'[{migration.id}] Downgrading migration "', nl=False
+                )
+                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+                click.secho('"... ', nl=False)
+
+                migration.downgrade()
+                self.database.migration_id = migration.down_migration
+
+                click.secho('[DONE]', fg=level.SUCCESS)
+
+                steps -= 1
+                if steps == 0:
+                    break
+
+        return init_migrations

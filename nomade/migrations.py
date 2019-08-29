@@ -60,6 +60,10 @@ class Migrations:
         return migrations
 
     def apply_migrations(func):
+        """Decorator responsible for applying the migrations by calling
+        the `migration_function` (upgrade or downgrade) and updating the
+        current migration ID in the database.
+        """
         @functools.wraps(func)
         def wrapper(self, steps):
             if steps <= 0:
@@ -71,21 +75,26 @@ class Migrations:
                 click.secho(f'Applying {func.__name__} migration "', nl=False)
                 click.secho(f'{migration.name}', nl=False, fg=level.INFO)
                 click.secho(f'" ({migration.id})... ', nl=False)
+
                 migrations_applied = True
+                migration.migration_function()
+                self.database.migration_id = migration.current_migration
+                click.secho('[DONE]', fg=level.SUCCESS)
+
+                steps -= 1
+                if steps == 0:
+                    break
 
             if not migrations_applied:
                 click.secho('No migrations to apply!', fg=level.WARNING)
         return wrapper
 
     @apply_migrations
-    def upgrade(self, steps):
+    def upgrade(self):
         """Upgrade migrations based on steps.
 
-        Args:
-            steps (int): the number of steps do upgrade.
-
-        Return:
-            bool: Return a flag stating if migrations have been applied.
+        Yields:
+            Migration: Yields the migration to be applied.
         """
         migration_id = self.database.migration_id
         init_migrations = not bool(migration_id)
@@ -97,24 +106,16 @@ class Migrations:
                 continue
 
             if init_migrations:
+                migration.migration_function = migration.upgrade
+                migration.current_migration = migration.id
                 yield migration
-                migration.upgrade()
-                self.database.migration_id = migration.id
-                click.secho('[DONE]', fg=level.SUCCESS)
-
-                steps -= 1
-                if steps == 0:
-                    break
 
     @apply_migrations
-    def downgrade(self, steps):
+    def downgrade(self):
         """Downgrade migrations based on steps.
 
-        Args:
-            steps (int): the number of steps do downgrade.
-
-        Return:
-            bool: Return a flag stating if migrations have been applied.
+        Yields:
+            Migration: Yields the migration to be applied.
         """
         migration_id = self.database.migration_id
         init_migrations = not bool(migration_id)
@@ -125,11 +126,6 @@ class Migrations:
                 init_migrations = True
 
             if init_migrations:
+                migration.migration_function = migration.downgrade
+                migration.current_migration = migration.down_migration
                 yield migration
-                migration.downgrade()
-                self.database.migration_id = migration.down_migration
-                click.secho('[DONE]', fg=level.SUCCESS)
-
-                steps -= 1
-                if steps == 0:
-                    break

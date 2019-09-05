@@ -6,7 +6,7 @@ class TestMigrations:
     def test_migrations(self):
         settings = Settings()
         settings.location = 'tests/migrations'
-        settings.conn_str = 'sqlite:///test_migrations.db'
+        settings.conn_str = 'sqlite:///:memory:'
         migrations = Migrations(settings)
         assert len(migrations) == 2
         assert migrations[0].id == '123'

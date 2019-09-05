@@ -6,28 +6,36 @@ Here you can find a description of all ``Nomade`` commands:
 Version
 -------
 
-Reference:
+Show the ``Nomade`` version.
+
+Usage:
 
     $ nomade version
 
 Init
 ----
 
-Reference:
+Initialize a ``Nomade`` project.
+
+Usage:
 
     $ nomade init
 
 Migrate
 -------
 
-Reference:
+Create a new ``Nomade`` migration.
+
+Usage:
 
     $ nomade migrate "My First Migration"
 
 Upgrade
 -------
 
-References:
+Upgrade database version.
+
+Usage:
 
     $ nomade upgrade head
 
@@ -36,7 +44,9 @@ References:
 Downgrade
 ---------
 
-References:
+Downgrade database version.
+
+Usage:
 
     $ nomade downgrade tail
 
@@ -45,20 +55,26 @@ References:
 History
 -------
 
-Reference:
+Show migration history.
+
+Usage:
 
     $ nomade history
 
 Current
 -------
 
-Reference:
+Show the current migration applied in the database.
+
+Usage:
 
     $ nomade current
 
 Help
 ----
 
-Reference:
+Show ``Nomade`` helper.
+
+Usage:
 
     $ nomade --help

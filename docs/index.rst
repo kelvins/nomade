@@ -7,7 +7,7 @@
 .. image:: ../artwork/logo.svg
    :alt: Nomade: Python Migration Manager for Humans
    :align: center
-   :width: 300
+   :width: 250
 
 Introduction
 ============

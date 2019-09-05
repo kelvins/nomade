@@ -9,10 +9,10 @@ flake8:
 	@flake8 nomade tests
 
 black:
-	@black nomade tests -S -l 79
+	@black nomade tests
 
 codecheck: flake8
-	@black nomade tests --check -S -l 79
+	@black nomade tests --check
 
 runtests:
 	@pytest -vv --cov-report term-missing --cov=nomade tests/

@@ -1,5 +1,4 @@
 import os
-import shutil
 from datetime import datetime
 
 import pytest
@@ -49,6 +48,7 @@ class TestMigration:
 
     def test_load_module_valid_path(self):
         from tests.migrations import migration_001
+
         current_path = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_path, 'migrations/migration_001.py')
         module = Migration._load_module('migrations.migration_001', file_path)

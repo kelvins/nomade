@@ -1,4 +1,3 @@
-from nomade.migration import Migration
 from nomade.migrations import Migrations
 from nomade.settings import Settings
 

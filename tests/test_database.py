@@ -15,6 +15,6 @@ class TestDatabase:
 
     def test_database_save_and_read_migration(self):
         database = Database('sqlite:///:memory:')
-        assert database.migration_id == None
+        assert database.migration_id is None
         database.migration_id = 'test123'
         assert database.migration_id == 'test123'

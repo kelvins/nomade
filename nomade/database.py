@@ -25,6 +25,7 @@ class NomadeModel(Base):
     """Nomade model class representing the nomade
     table that will be stored in the database.
     """
+
     __tablename__ = 'nomade'
     migration = sa.Column(sa.String, primary_key=True)
 
@@ -36,6 +37,7 @@ class Database:
     """Class responsible for dealing with simple database operations.
     (e.g. get migration ID, set current migration ID).
     """
+
     def __init__(self, connection_string):
         engine = sa.create_engine(connection_string)
         Session.configure(bind=engine)

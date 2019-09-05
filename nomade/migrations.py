@@ -15,6 +15,7 @@ class Migrations:
     Args:
         settings (Settings): A settings object with migrations location.
     """
+
     def __init__(self, settings):
         self.settings = settings
         self.database = Database(self.settings.conn_str)
@@ -64,6 +65,7 @@ class Migrations:
         the `migration_function` (upgrade or downgrade) and updating the
         current migration ID in the database.
         """
+
         @functools.wraps(func)
         def wrapper(self, steps):
             if steps <= 0:
@@ -87,6 +89,7 @@ class Migrations:
 
             if not migrations_applied:
                 click.secho('No migrations to apply!', fg=level.WARNING)
+
         return wrapper
 
     @apply_migrations

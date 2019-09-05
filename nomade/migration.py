@@ -16,6 +16,7 @@ class Migration:
         upgrade (function): Migration upgrade function.
         downgrade (function): Migration downgrade function.
     """
+
     def __init__(
         self, id, name, date, down_migration=None, upgrade=None, downgrade=None
     ):

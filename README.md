@@ -37,7 +37,7 @@ It will create the following project structure:
 └── .nomade.yml
 ```
 
-Set the settings in the `.nomade.yml` file.
+Define **Nomade** settings in the `.nomade.yml` file.
 
 Then, create your first migration:
 
@@ -45,13 +45,15 @@ Then, create your first migration:
 $ nomade migrate "My first migration"
 ```
 
+Implement the `upgrade` and `downgrade` functions in the migration file.
+
 Then apply the migration to the database:
 
 ```bash
 $ nomade upgrade head
 ```
 
-To discover more Nomade features please read the documentation or run:
+To discover more **Nomade** features please read the documentation or run:
 
 ```bash
 $ nomade --help

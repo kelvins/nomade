@@ -93,8 +93,11 @@ class Migrations:
         return wrapper
 
     @apply_migrations
-    def upgrade(self):
+    def upgrade(self, steps):
         """Upgrade migrations based on steps.
+
+        Args:
+            steps (int): the number of steps to migrate.
 
         Yields:
             Migration: Yields the migration to be applied.
@@ -114,8 +117,11 @@ class Migrations:
                 yield migration
 
     @apply_migrations
-    def downgrade(self):
+    def downgrade(self, steps):
         """Downgrade migrations based on steps.
+
+        Args:
+            steps (int): the number of steps to migrate.
 
         Yields:
             Migration: Yields the migration to be applied.

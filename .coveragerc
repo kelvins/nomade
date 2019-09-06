@@ -1,7 +1,9 @@
 [run]
 branch = True
 source = nomade
-omit = nomade/main.py
+omit = 
+    nomade/main.py
+    nomade/__init__.py
 
 [report]
 fail_under = 80

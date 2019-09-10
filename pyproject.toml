@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nomade"
-version = "0.0.0"
+version = "0.0.1"
 description = "Migration Manager for Humans"
 authors = ["Kelvin S. do Prado <kelvinpfw@gmail.com>"]
 license = "Apache-2.0"

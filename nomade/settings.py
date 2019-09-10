@@ -17,7 +17,7 @@ class Settings:
             attributes loaded from the YAML file.
         """
         with open(file_path, 'r') as yaml_file:
-            data = yaml.load(yaml_file, Loader=yaml.FullLoader)
+            data = yaml.safe_load(yaml_file)
 
         settings = Settings()
         for key, value in data.items():

@@ -20,6 +20,9 @@ codecheck: flake8  ## Run code check with flake8 and black)
 runtests:  ## Run tests with pytest and generate code coverage with pytest-cov
 	@pytest -vv --cov-report term-missing --cov=nomade tests/
 
+security:  ## Run security checks using bandit
+	@bandit -rv nomade
+
 documentation:  ## Make the HTML documentation with sphinx
 	@sphinx-apidoc -f -o docs nomade
 	@(cd docs; make html)

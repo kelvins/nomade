@@ -21,15 +21,16 @@ flake8 = "^3.7"
 black = {version = "^18.3-alpha.0", allows-prereleases = true}
 isort = "^4.3"
 sphinx = "^2.2"
+bandit = "^1.6"
 
 [tool.poetry.scripts]
 nomade = 'nomade.main:cli'
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
 
 [tool.black]
 line-length = 79
 target-version = ['py37']
 skip-string-normalization = true
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

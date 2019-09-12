@@ -15,6 +15,16 @@ It basically follows the following approach to define versions (**MAJOR.MINOR.PA
 [Unreleased]
 ------------
 
+Changed
++++++++
+
+- Change settings file from `.nomade.yml` to `pyproject.toml`.
+
+Security
+++++++++
+
+- Use `bandit` to search for common security issues.
+
 [0.0.1] - 2019-09-09
 --------------------
 

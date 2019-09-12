@@ -2,8 +2,8 @@
   <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="250" height="150" />
 </p>
 
-![Release Alpha](https://img.shields.io/badge/release-alpha-orange.svg)
 [![Build Status](https://travis-ci.org/kelvins/nomade.svg?branch=master)](https://travis-ci.org/kelvins/nomade)
+[![PyPI Nomade](https://img.shields.io/pypi/v/nomade.svg)](https://pypi.org/project/nomade/)
 [![Python Version 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
 [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License Apache 2.0](https://img.shields.io/badge/license-apache%202.0-blue.svg)](https://github.com/kelvins/nomade/blob/master/LICENSE)

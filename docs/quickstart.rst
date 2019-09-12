@@ -28,7 +28,7 @@ Initialize a ``Nomade`` project with:
 
     $ nomade init
 
-Set the settings in the `.nomade.yml` file.
+Set the settings in the `pyproject.toml` file.
 
 Then, create your first migration:
 

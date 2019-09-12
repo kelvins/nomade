@@ -34,10 +34,10 @@ It will create the following project structure:
 ├── nomade
 │   ├── template.py
 │   └── migrations
-└── .nomade.yml
+└── pyproject.toml
 ```
 
-Define **Nomade** settings in the `.nomade.yml` file.
+Define **Nomade** settings in the `pyproject.toml` file.
 
 Then, create your first migration:
 

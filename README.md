@@ -1,13 +1,27 @@
 <p align="center">
-  <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="250" height="150" />
+    <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="250" height="150" />
 </p>
 
-[![Build Status](https://travis-ci.org/kelvins/nomade.svg?branch=master)](https://travis-ci.org/kelvins/nomade)
-[![Coverage Status](https://coveralls.io/repos/github/kelvins/nomade/badge.svg?branch=master)](https://coveralls.io/github/kelvins/nomade?branch=master)
-[![PyPI Version](https://img.shields.io/pypi/v/nomade.svg)](https://pypi.org/project/nomade/)
-[![Python Version](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
-[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![License](https://img.shields.io/badge/license-apache%202.0-blue.svg)](https://github.com/kelvins/nomade/blob/master/LICENSE)
+<p align="center">
+    <a href="https://travis-ci.org/kelvins/nomade" alt="Build Status">
+        <img src="https://travis-ci.org/kelvins/nomade.svg?branch=master" />
+    </a>
+    <a href="https://coveralls.io/github/kelvins/nomade?branch=master" alt="Coverage Status">
+        <img src="https://coveralls.io/repos/github/kelvins/nomade/badge.svg?branch=master" />
+    </a>
+    <a href="https://pypi.org/project/nomade/" alt="PyPI Version">
+        <img src="https://img.shields.io/pypi/v/nomade.svg" />
+    </a>
+    <a href="https://www.python.org/downloads/release/python-370/" alt="Python Version">
+        <img src="https://img.shields.io/badge/python-3.7-blue.svg" />
+    </a>
+    <a href="https://github.com/psf/black" alt="Code Style">
+        <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
+    </a>
+    <a href="https://github.com/kelvins/nomade/blob/master/LICENSE" alt="License">
+        <img src="https://img.shields.io/badge/license-apache%202.0-blue.svg" />
+    </a>
+</p>
 
 > Python Migration Manager for Humans :camel:
 

@@ -13,3 +13,6 @@ script:
   - make codecheck
   - make security
   - make runtests
+
+after_success:
+  - coveralls

@@ -22,6 +22,7 @@ black = {version = "^18.3-alpha.0", allows-prereleases = true}
 isort = "^4.3"
 sphinx = "^2.2"
 bandit = "^1.6"
+coveralls = "=1.8.2"
 
 [tool.poetry.scripts]
 nomade = 'nomade.main:cli'

@@ -1,25 +1,27 @@
 import os
 from datetime import datetime
-from unittest import mock
+from unittest.mock import patch, Mock
 
 import pytest
 
 from nomade.migrations import Migrations
+from nomade.settings import Settings
 from nomade.nomad import Nomad
 
 
 @pytest.fixture
 def nomad():
-    yield Nomad(os.path.join('tests', 'assets', '.nomade.yml'))
+    yield Nomad(os.path.join('tests', 'assets', 'pyproject.toml'))
 
 
 class TestNomad:
-    @mock.patch('os.makedirs')
-    @mock.patch('shutil.copyfile')
-    def test_init(self, copyfile, makedirs):
+    @patch('os.makedirs')
+    @patch('shutil.copyfile')
+    def test_init(self, copyfile, makedirs, monkeypatch):
+        monkeypatch.setattr(Settings, 'save', Mock())
         Nomad.init()
         makedirs.assert_called_once_with(os.path.join('nomade', 'migrations'))
-        assert copyfile.call_count == 2
+        copyfile.assert_called_once()
 
     def test_steps_to_int_with_max_steps(self):
         assert Nomad._steps_to_int('head', 'head', 5) == 5

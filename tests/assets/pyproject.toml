@@ -1,0 +1,6 @@
+[tool.nomade]
+location = "tests/migrations"
+template = "tests/assets/template.py"
+conn_str = "sqlite:///:memory:"
+date_fmt = "%d/%m/%Y"
+name_fmt = "{date}_{time}_{id}_{slug}"

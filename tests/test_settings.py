@@ -31,7 +31,7 @@ class TestSettings:
             'tool': {
                 'nomade': {
                     'location': 'location',
-                    'name_fmt': '{date}_{time}_{id}_{slug}',
+                    'name-fmt': '{date}_{time}_{id}_{slug}',
                 }
             }
         }

@@ -14,7 +14,10 @@ class Settings:
             str: A string containing the TOML-formatted
             data corresponding to current object.
         """
-        content = {'tool': {'nomade': self.__dict__}}
+        content = {'tool': {'nomade': None}}
+        content['tool']['nomade'] = {
+            k.replace('_', '-'): v for k, v in self.__dict__.items()
+        }
         with open(file_path, 'a') as f:
             return toml.dump(content, f)
 
@@ -33,5 +36,5 @@ class Settings:
         content = toml.load(file_path)
         settings = Settings()
         for key, value in content['tool']['nomade'].items():
-            setattr(settings, key, value)
+            setattr(settings, key.replace('-', '_'), value)
         return settings

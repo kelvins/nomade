@@ -1,25 +1,37 @@
-import yaml
+import toml
 
 
 class Settings:
-    """Settings class responsible for dealing with YAML files."""
+    """Settings class responsible for dealing with TOML files."""
 
-    @staticmethod
-    def load(file_path):
-        """Factory method responsible for loading settings
-        from a YAML file.
+    def save(self, file_path='pyproject.toml'):
+        """Dump the current settings to a TOML file.
 
         Args:
-            file_path (str): path to the YAML file.
+            file_path (str): path to the TOML file.
+
+        Returns:
+            str: A string containing the TOML-formatted
+            data corresponding to current object.
+        """
+        content = {'tool': {'nomade': self.__dict__}}
+        with open(file_path, 'a') as f:
+            return toml.dump(content, f)
+
+    @staticmethod
+    def load(file_path='pyproject.toml'):
+        """Factory method responsible for loading settings
+        from a TOML file.
+
+        Args:
+            file_path (str): path to the TOML file.
 
         Returns:
             Settings: Return a Settings object with the
-            attributes loaded from the YAML file.
+            attributes loaded from the TOML file.
         """
-        with open(file_path, 'r') as yaml_file:
-            data = yaml.safe_load(yaml_file)
-
+        content = toml.load(file_path)
         settings = Settings()
-        for key, value in data.items():
+        for key, value in content['tool']['nomade'].items():
             setattr(settings, key, value)
         return settings

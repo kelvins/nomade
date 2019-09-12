@@ -13,7 +13,7 @@ from nomade.settings import Settings
 
 
 class Nomad:
-    def __init__(self, settings_path='.nomade.yml'):
+    def __init__(self, settings_path='pyproject.toml'):
         self.settings = Settings.load(settings_path)
         self.database = Database(self.settings.conn_str)
 
@@ -28,10 +28,12 @@ class Nomad:
             pass
 
         current_path = os.path.dirname(os.path.abspath(__file__))
-        shutil.copyfile(
-            os.path.join(current_path, 'assets', '.nomade.yml'),
-            os.path.join('.', '.nomade.yml'),
+
+        settings = Settings.load(
+            os.path.join(current_path, 'assets', 'pyproject.toml')
         )
+        settings.save('pyproject.toml')
+
         shutil.copyfile(
             os.path.join(current_path, 'assets', 'template.py'),
             os.path.join('nomade', 'template.py'),
@@ -43,7 +45,7 @@ class Nomad:
         click.secho('├── nomade')
         click.secho('│   ├── template.py')
         click.secho('│   └── migrations')
-        click.secho('└── .nomade.yml')
+        click.secho('└── pyproject.toml')
 
     def migrate(self, name):
         """Create a new Nomade migration using the Migration class.

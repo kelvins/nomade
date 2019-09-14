@@ -55,6 +55,15 @@ It will create the following project structure:
 
 Define **Nomade** settings in the `pyproject.toml` file.
 
+```toml
+[tool.nomade]
+migrations = "nomade/migrations"
+template = "nomade/template.py.j2"
+connection-string = "sqlite:///nomade.db"
+date-format = "%d/%m/%Y"
+name-format = "{date}_{time}_{id}_{slug}"
+```
+
 Then, create your first migration:
 
 ```bash

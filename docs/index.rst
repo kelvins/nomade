@@ -22,6 +22,7 @@ Nomade is a simple migration manager tool that aims to be easy to integrate with
 
    quickstart
    commands
+   settings
    Contributing <contributing>
    changelog
    modules

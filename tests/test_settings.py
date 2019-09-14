@@ -7,11 +7,11 @@ from nomade.settings import Settings
 
 
 class TestSettings:
-    def test_load_invalid_yaml_path(self):
+    def test_load_invalid_toml_path(self):
         with pytest.raises(FileNotFoundError):
             Settings.load('invalid/path.toml')
 
-    def test_load_valid_yaml_file(self):
+    def test_load_valid_toml_file(self):
         file_path = os.path.join('tests', 'assets', 'pyproject.toml')
         settings = Settings.load(file_path)
         assert settings.migrations == os.path.join('tests', 'migrations')

@@ -377,7 +377,7 @@ python-versions = "*"
 version = "2019.2"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
 optional = false
@@ -550,7 +550,7 @@ python-versions = ">=2.7"
 version = "0.5.2"
 
 [metadata]
-content-hash = "778f0be6473773ed34bcf8121b225a2e51b864eb5c5469bca1df30a82b9d523e"
+content-hash = "e0c4b2a8c0c18115b52b182c86e8eca4ef8791c3c2344859c09606fdb0005a42"
 python-versions = "^3.7"
 
 [metadata.hashes]

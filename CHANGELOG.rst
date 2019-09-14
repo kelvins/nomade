@@ -18,6 +18,7 @@ It basically follows the following approach to define versions (**MAJOR.MINOR.PA
 Added
 +++++
 
+- Add the ``stamp`` command to save a migration ID in the database without applying any migration.
 - Configure Travis CI and Coveralls to track the code quality (code format and coverage).
 
 Changed

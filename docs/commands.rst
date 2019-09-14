@@ -78,3 +78,14 @@ Show ``Nomade`` helper.
 Usage:
 
     $ nomade --help
+
+Stamp
+-----
+
+Stamp a specific migration to the database.
+
+**Note**: this command will not run any migration, it will only save the migration ID in the database.
+
+Usage:
+
+    $ nomade stamp u19jh2h1

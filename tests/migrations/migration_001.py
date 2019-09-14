@@ -9,7 +9,7 @@ Created at: 01/01/2001
 migration_name = 'Migration 001'
 migration_date = '01/01/2001'
 curr_migration = '123'
-down_migration = ''
+down_migration = None
 
 
 def upgrade():

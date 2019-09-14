@@ -32,7 +32,7 @@ class Migrations:
         """Sort the _migrations list based on the migration ID."""
         migrations_dict = {m.down_migration: m for m in self._migrations}
         self._migrations = list()
-        current = ''
+        current = None
         while True:
             try:
                 self._migrations.append(migrations_dict[current])

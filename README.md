@@ -48,7 +48,7 @@ It will create the following project structure:
 ```
 .
 ├── nomade
-│   ├── template.py
+│   ├── template.py.j2
 │   └── migrations
 └── pyproject.toml
 ```

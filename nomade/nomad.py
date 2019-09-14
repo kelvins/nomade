@@ -35,15 +35,15 @@ class Nomad:
         settings.save('pyproject.toml')
 
         shutil.copyfile(
-            os.path.join(current_path, 'assets', 'template.py'),
-            os.path.join('nomade', 'template.py'),
+            os.path.join(current_path, 'assets', 'template.py.j2'),
+            os.path.join('nomade', 'template.py.j2'),
         )
         click.secho('Initializing ', nl=False)
         click.secho('Nomade', nl=False, fg=level.INFO)
         click.secho(' project:')
         click.secho('.')
         click.secho('├── nomade')
-        click.secho('│   ├── template.py')
+        click.secho('│   ├── template.py.j2')
         click.secho('│   └── migrations')
         click.secho('└── pyproject.toml')
 

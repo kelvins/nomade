@@ -16,7 +16,7 @@ class TestSettings:
         settings = Settings.load(file_path)
         assert settings.migrations == os.path.join('tests', 'migrations')
         assert settings.template == os.path.join(
-            'tests', 'assets', 'template.py'
+            'tests', 'assets', 'template.py.j2'
         )
         assert settings.connection_string == 'sqlite:///:memory:'
         assert settings.date_format == '%d/%m/%Y'

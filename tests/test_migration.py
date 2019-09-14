@@ -62,12 +62,12 @@ class TestMigration:
         assert migration.id == '123'
         assert migration.name == 'Migration 001'
         assert migration.date == '01/01/2001'
-        assert migration.down_migration == ''
+        assert migration.down_migration is None
 
     def test_save_valid_migration(self):
         settings = Settings()
         settings.migrations = 'tests/migrations'
-        settings.template = 'tests/assets/template.py'
+        settings.template = 'tests/assets/template.py.j2'
         settings.date_format = '%d/%m/%Y'
         settings.name_format = '{id}_{slug}'
 

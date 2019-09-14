@@ -2,6 +2,8 @@ import importlib
 import os
 from datetime import datetime
 
+from jinja2 import Template
+
 from nomade import utils
 
 
@@ -60,13 +62,18 @@ class Migration:
         """
         file_name = self._make_file_name(settings)
         with open(settings.template, 'r') as template_file:
-            template = template_file.read()
+            template = Template(template_file.read())
 
-        file_content = template.format(
-            migration_name=self.name,
-            migration_date=self.date,
-            curr_migration=self.id,
-            down_migration=self.down_migration or '',
+        if self.down_migration:
+            down_migration = f'\'{self.down_migration}\''
+        else:
+            down_migration = self.down_migration
+
+        file_content = template.render(
+            migration_name=f'\'{self.name}\'',
+            migration_date=f'\'{self.date}\'',
+            curr_migration=f'\'{self.id}\'',
+            down_migration=down_migration,
         )
 
         file_path = os.path.join(settings.migrations, file_name)

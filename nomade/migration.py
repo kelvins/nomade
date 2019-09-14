@@ -40,7 +40,7 @@ class Migration:
             str: Return the migration file name.
         """
         date_time = datetime.now()
-        file_name = settings.name_fmt.format(
+        file_name = settings.name_format.format(
             date=date_time.strftime('%Y%m%d'),
             time=date_time.strftime('%H%M%S'),
             id=self.id,
@@ -69,7 +69,7 @@ class Migration:
             down_migration=self.down_migration or '',
         )
 
-        file_path = os.path.join(settings.location, file_name)
+        file_path = os.path.join(settings.migrations, file_name)
         with open(file_path, 'w') as migration_file:
             migration_file.write(file_content)
 

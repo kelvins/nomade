@@ -15,7 +15,7 @@ from nomade.settings import Settings
 class Nomad:
     def __init__(self, settings_path='pyproject.toml'):
         self.settings = Settings.load(settings_path)
-        self.database = Database(self.settings.conn_str)
+        self.database = Database(self.settings.connection_string)
 
     @staticmethod
     def init():
@@ -61,7 +61,7 @@ class Nomad:
         migration = Migration(
             id=utils.unique_id(),
             name=name,
-            date=datetime.now().strftime(self.settings.date_fmt),
+            date=datetime.now().strftime(self.settings.date_format),
             down_migration=down_migration,
         )
         migration.save(self.settings)
@@ -144,6 +144,7 @@ class Nomad:
                 return
 
         click.secho(
-            f'Migration {migration_id} not found in {self.settings.location}',
+            f'Migration {migration_id} not '
+            f'found in {self.settings.migrations}',
             fg=level.ERROR,
         )

@@ -14,7 +14,7 @@ class TestMigration:
 
     def test_make_file_name_with_extension(self):
         settings = Settings()
-        settings.name_fmt = '{date}_{id}_{slug}.py'
+        settings.name_format = '{date}_{id}_{slug}.py'
         migration = Migration('123', 'Test 1', None)
         date = datetime.now().strftime('%Y%m%d')
         expected_file_name = f'{date}_123_test_1.py'
@@ -22,7 +22,7 @@ class TestMigration:
 
     def test_make_file_name_without_extension(self):
         settings = Settings()
-        settings.name_fmt = '{date}_{id}_{slug}'
+        settings.name_format = '{date}_{id}_{slug}'
         migration = Migration('123', 'Test 1', None)
         date = datetime.now().strftime('%Y%m%d')
         expected_file_name = f'{date}_123_test_1.py'
@@ -66,10 +66,10 @@ class TestMigration:
 
     def test_save_valid_migration(self):
         settings = Settings()
-        settings.location = 'tests/migrations'
+        settings.migrations = 'tests/migrations'
         settings.template = 'tests/assets/template.py'
-        settings.date_fmt = '%d/%m/%Y'
-        settings.name_fmt = '{id}_{slug}'
+        settings.date_format = '%d/%m/%Y'
+        settings.name_format = '{id}_{slug}'
 
         migration = Migration(
             id='789', name='Test Save', date='01/01/2020', down_migration='456'

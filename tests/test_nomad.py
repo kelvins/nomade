@@ -1,12 +1,12 @@
 import os
 from datetime import datetime
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 import pytest
 
 from nomade.migrations import Migrations
-from nomade.settings import Settings
 from nomade.nomad import Nomad
+from nomade.settings import Settings
 
 
 @pytest.fixture

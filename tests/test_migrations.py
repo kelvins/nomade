@@ -7,8 +7,8 @@ from nomade.settings import Settings
 @pytest.fixture
 def migrations():
     settings = Settings()
-    settings.location = 'tests/migrations'
-    settings.conn_str = 'sqlite:///:memory:'
+    settings.migrations = 'tests/migrations'
+    settings.connection_string = 'sqlite:///:memory:'
     yield Migrations(settings)
 
 

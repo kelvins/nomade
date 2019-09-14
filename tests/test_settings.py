@@ -1,7 +1,7 @@
 import os
-import toml
 
 import pytest
+import toml
 
 from nomade.settings import Settings
 
@@ -14,24 +14,24 @@ class TestSettings:
     def test_load_valid_yaml_file(self):
         file_path = os.path.join('tests', 'assets', 'pyproject.toml')
         settings = Settings.load(file_path)
-        assert settings.location == os.path.join('tests', 'migrations')
+        assert settings.migrations == os.path.join('tests', 'migrations')
         assert settings.template == os.path.join(
             'tests', 'assets', 'template.py'
         )
-        assert settings.conn_str == 'sqlite:///:memory:'
-        assert settings.date_fmt == '%d/%m/%Y'
-        assert settings.name_fmt == '{date}_{time}_{id}_{slug}'
+        assert settings.connection_string == 'sqlite:///:memory:'
+        assert settings.date_format == '%d/%m/%Y'
+        assert settings.name_format == '{date}_{time}_{id}_{slug}'
 
     def test_save_valid_toml_file(self):
         settings = Settings()
-        settings.location = 'location'
-        settings.name_fmt = '{date}_{time}_{id}_{slug}'
+        settings.migrations = 'migrations'
+        settings.name_format = '{date}_{time}_{id}_{slug}'
         settings.save('other.toml')
         expected_result = {
             'tool': {
                 'nomade': {
-                    'location': 'location',
-                    'name-fmt': '{date}_{time}_{id}_{slug}',
+                    'migrations': 'migrations',
+                    'name-format': '{date}_{time}_{id}_{slug}',
                 }
             }
         }

@@ -1,6 +1,6 @@
 [tool.nomade]
-location = "nomade/migrations"
+migrations = "nomade/migrations"
 template = "nomade/template.py"
-conn-str = "sqlite:///nomade.db"
-date-fmt = "%d/%m/%Y"
-name-fmt = "{date}_{time}_{id}_{slug}"
+connection-string = "sqlite:///nomade.db"
+date-format = "%d/%m/%Y"
+name-format = "{date}_{time}_{id}_{slug}"

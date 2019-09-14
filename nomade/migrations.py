@@ -18,7 +18,7 @@ class Migrations:
 
     def __init__(self, settings):
         self.settings = settings
-        self.database = Database(self.settings.conn_str)
+        self.database = Database(self.settings.connection_string)
         self._migrations = self._load(self.settings)
         self.sort()
 
@@ -51,11 +51,11 @@ class Migrations:
             list: Return a list of Migration objects unsorted.
         """
         migrations = list()
-        path = os.path.join(os.getcwd(), settings.location)
+        path = os.path.join(os.getcwd(), settings.migrations)
         modules = pkgutil.iter_modules(path=[path])
         for _, name, _ in modules:
             try:
-                migrations.append(Migration.load(settings.location, name))
+                migrations.append(Migration.load(settings.migrations, name))
             except AttributeError:
                 pass
         return migrations

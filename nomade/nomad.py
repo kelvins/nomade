@@ -148,3 +148,23 @@ class Nomad:
             f'found in {self.settings.migrations}',
             fg=level.ERROR,
         )
+
+    def stamp(self, migration_id):
+        """Stamp a specific revision to the database.
+
+        Args:
+            migration_id (str): revision ID.
+        """
+        for migration in Migrations(self.settings):
+            if migration.id == migration_id:
+                self.database.migration_id = migration.id
+                click.secho(f'[{migration.id}] Migration "', nl=False)
+                click.secho(f'{migration.name}', nl=False, fg=level.INFO)
+                click.secho(f'" successfully stamped.')
+                return
+        else:
+            click.secho(
+                f'Migration {migration_id} not '
+                f'found in {self.settings.migrations}',
+                fg=level.ERROR,
+            )

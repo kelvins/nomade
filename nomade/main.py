@@ -85,5 +85,16 @@ def current():
     Nomad().current()
 
 
+@cli.command()
+@click.argument('migration_id', required=True)
+def stamp(migration_id):
+    """Stamp a specific migration to the database.
+
+    Example:\n
+        nomade stamp 19ma82h1
+    """
+    Nomad().stamp(migration_id)
+
+
 if __name__ == '__main__':
     cli()

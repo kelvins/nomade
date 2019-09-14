@@ -15,6 +15,11 @@ def nomad():
 
 
 class TestNomad:
+    def teardown_method(self, method):
+        for file_name in os.listdir(os.path.join('tests', 'migrations')):
+            if file_name.endswith('_create_table.py'):
+                os.remove(os.path.join('tests', 'migrations', file_name))
+
     @patch('os.makedirs')
     @patch('shutil.copyfile')
     def test_init(self, copyfile, makedirs, monkeypatch):
@@ -38,6 +43,15 @@ class TestNomad:
         assert migration.name == 'Create table'
         assert migration.date == datetime.now().strftime('%d/%m/%Y')
         assert migration.down_migration == '456'
-        for file_name in os.listdir(os.path.join('tests', 'migrations')):
-            if file_name.endswith(f'{migration.id}_create_table.py'):
-                os.remove(os.path.join('tests', 'migrations', file_name))
+
+    def test_stamp(self, nomad, monkeypatch):
+        nomad.migrate('Create table')
+        migration = Migrations(nomad.settings)[-1]
+        monkeypatch.setattr(migration, 'upgrade', Mock())
+        monkeypatch.setattr(migration, 'downgrade', Mock())
+
+        assert nomad.database.migration_id is None
+        nomad.stamp(migration.id)
+        assert nomad.database.migration_id == migration.id
+        migration.upgrade.assert_not_called()
+        migration.downgrade.assert_not_called()

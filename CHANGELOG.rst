@@ -15,15 +15,22 @@ It basically follows the following approach to define versions (**MAJOR.MINOR.PA
 [Unreleased]
 ------------
 
+Added
++++++
+
+- Configure Travis CI and Coveralls to track the code quality (code format and coverage).
+
 Changed
 +++++++
 
-- Change settings file from `.nomade.yml` to `pyproject.toml`.
+- Change settings file from ``.nomade.yml`` to ``pyproject.toml``.
+- Makes configuration variables more verbose.
+- Change migration template from ``template.py`` to ``template.py.j2`` (Jinja2).
 
 Security
 ++++++++
 
-- Use `bandit` to search for common security issues.
+- Use ``bandit`` to search for common security issues.
 
 [0.0.1] - 2019-09-09
 --------------------
@@ -31,17 +38,17 @@ Security
 Added
 +++++
 
-- Use `Poetry` to manage dependencies.
-- Use `bumpversion` to automate semantic versioning.
+- Use ``Poetry`` to manage dependencies.
+- Use ``bumpversion`` to automate semantic versioning.
 - Add command line interface (CLI) commands:
 
-  - `init`: initialize a Nomade project.
-  - `version`: show package version.
-  - `migrate`: create a new migration.
-  - `upgrade`: upgrade to a new migration version.
-  - `downgrade`: downgrade to a previous migration version.
-  - `history`: show migrations history.
-  - `current`: show the current migration.
+  - ``init``: initialize a Nomade project.
+  - ``version``: show package version.
+  - ``migrate``: create a new migration.
+  - ``upgrade``: upgrade to a new migration version.
+  - ``downgrade``: downgrade to a previous migration version.
+  - ``history``: show migrations history.
+  - ``current``: show the current migration.
 
-- Support for `SQLite`, `MySQL` and `PostgreSQL`.
-- Use `isort`, `black` and `flake8` to format and check the source code.
+- Support for ``SQLite``, ``MySQL`` and ``PostgreSQL``.
+- Use ``isort``, ``black`` and ``flake8`` to format and check the source code.

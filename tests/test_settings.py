@@ -1,4 +1,5 @@
 import os
+from unittest.mock import patch
 
 import pytest
 import toml
@@ -37,3 +38,9 @@ class TestSettings:
         }
         assert toml.load('other.toml') == expected_result
         os.remove('other.toml')
+
+    @patch.dict('os.environ', {'CONNECTION_STRING': 'test connection string'})
+    def test_load_connection_string_from_environment_variable(self):
+        file_path = os.path.join('tests', 'assets', 'pyproject.toml')
+        settings = Settings.load(file_path)
+        assert settings.connection_string == 'test connection string'

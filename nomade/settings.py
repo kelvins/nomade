@@ -1,3 +1,5 @@
+import os
+
 import toml
 
 
@@ -37,4 +39,10 @@ class Settings:
         settings = Settings()
         for key, value in content['tool']['nomade'].items():
             setattr(settings, key.replace('-', '_'), value)
+
+        if 'CONNECTION_STRING' in os.environ:
+            setattr(
+                settings, 'connection_string', os.environ['CONNECTION_STRING']
+            )
+
         return settings

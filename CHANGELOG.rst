@@ -20,6 +20,7 @@ Added
 
 - Add the ``stamp`` command to save a migration ID in the database without applying any migration.
 - Configure Travis CI and Coveralls to track the code quality (code format and coverage).
+- Add a way to provide the connection string through an environment variable (``CONNECTION_STRING``).
 
 Changed
 +++++++

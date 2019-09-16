@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+import click
 import pytest
 
 from nomade.migrations import Migrations
@@ -20,9 +21,10 @@ class TestNomad:
             if file_name.endswith('_create_table.py'):
                 os.remove(os.path.join('tests', 'migrations', file_name))
 
-    @patch('os.makedirs')
     @patch('shutil.copyfile')
-    def test_init(self, copyfile, makedirs, monkeypatch):
+    def test_init(self, copyfile, monkeypatch):
+        makedirs = Mock(side_effect=FileExistsError('File already exists'))
+        monkeypatch.setattr(os, 'makedirs', makedirs)
         monkeypatch.setattr(Settings, 'save', Mock())
         Nomad.init()
         makedirs.assert_called_once_with(os.path.join('nomade', 'migrations'))
@@ -55,3 +57,44 @@ class TestNomad:
         assert nomad.database.migration_id == migration.id
         migration.upgrade.assert_not_called()
         migration.downgrade.assert_not_called()
+
+    def test_upgrade_with_head(self, nomad, monkeypatch):
+        upgrade = Mock()
+        monkeypatch.setattr(Migrations, 'upgrade', upgrade)
+        nomad.upgrade('head')
+        upgrade.assert_called_once_with(2)
+
+    def test_downgrade_with_tail(self, nomad, monkeypatch):
+        downgrade = Mock()
+        monkeypatch.setattr(Migrations, 'downgrade', downgrade)
+        nomad.downgrade('tail')
+        downgrade.assert_called_once_with(2)
+
+    def test_current_no_migration(self, nomad, monkeypatch):
+        monkeypatch.setattr(click, 'secho', Mock())
+        nomad.current()
+        assert click.secho.call_count == 1
+
+    def test_current_with_valid_migration(self, nomad, monkeypatch):
+        nomad.upgrade('1')
+        monkeypatch.setattr(click, 'secho', Mock())
+        nomad.current()
+        assert click.secho.call_count == 4
+
+    def test_current_invalid_migration(self, nomad, monkeypatch):
+        monkeypatch.setattr(click, 'secho', Mock())
+        nomad.database.migration_id = 'invalid migration id'
+        nomad.current()
+        assert click.secho.call_count == 1
+
+    def test_stamp_invalid_migration_id(self, nomad, monkeypatch):
+        monkeypatch.setattr(click, 'secho', Mock())
+        nomad.stamp('invalid migration id')
+        assert click.secho.call_count == 1
+        assert nomad.database.migration_id is None
+
+    def test_stamp_valid_migration_id(self, nomad, monkeypatch):
+        monkeypatch.setattr(click, 'secho', Mock())
+        nomad.stamp('456')
+        assert click.secho.call_count == 3
+        assert nomad.database.migration_id == '456'

@@ -80,10 +80,25 @@ Then apply the migration to the database:
 $ nomade upgrade head
 ```
 
-To discover more **Nomade** features please read the documentation or run:
+To discover more **Nomade** features please read the documentation or call for help:
 
-```bash
+```
 $ nomade --help
+
+Usage: nomade [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  current    Show the current migration.
+  downgrade  Downgrade migrations.
+  history    Show migrations history.
+  init       Init a Nomade project.
+  migrate    Create a new migration.
+  stamp      Stamp a specific migration to the database.
+  upgrade    Upgrade migrations.
+  version    Show Nomade version.
 ```
 
 ## How to Contribute

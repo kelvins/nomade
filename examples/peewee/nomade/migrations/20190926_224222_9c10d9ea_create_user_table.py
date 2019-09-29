@@ -12,7 +12,7 @@ from playhouse.db_url import connect
 migration_name = 'Create user table'
 migration_date = '26/09/2019'
 curr_migration = '9c10d9ea'
-down_migration = None
+down_migration = ''
 
 db = connect(os.getenv('CONNECTION_STRING'))
 

@@ -518,7 +518,7 @@ pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 six = ">=1.10.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
@@ -550,7 +550,7 @@ python-versions = ">=2.7"
 version = "0.5.2"
 
 [metadata]
-content-hash = "e0c4b2a8c0c18115b52b182c86e8eca4ef8791c3c2344859c09606fdb0005a42"
+content-hash = "0704515d8e9311f0cb958eb3929d538d155ce654422773662a391ba8d2e6791f"
 python-versions = "^3.7"
 
 [metadata.hashes]

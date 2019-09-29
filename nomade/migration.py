@@ -64,16 +64,11 @@ class Migration:
         with open(settings.template, 'r') as template_file:
             template = Template(template_file.read())
 
-        if self.down_migration:
-            down_migration = f'\'{self.down_migration}\''
-        else:
-            down_migration = self.down_migration
-
         file_content = template.render(
-            migration_name=f'\'{self.name}\'',
-            migration_date=f'\'{self.date}\'',
-            curr_migration=f'\'{self.id}\'',
-            down_migration=down_migration,
+            migration_name=self.name,
+            migration_date=self.date,
+            curr_migration=self.id,
+            down_migration=self.down_migration or '',
         )
 
         file_path = os.path.join(settings.migrations, file_name)
@@ -139,7 +134,7 @@ class Migration:
             id=module.curr_migration,
             name=module.migration_name,
             date=module.migration_date,
-            down_migration=module.down_migration,
+            down_migration=module.down_migration or None,
             upgrade=module.upgrade,
             downgrade=module.downgrade,
         )

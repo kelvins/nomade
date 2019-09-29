@@ -15,7 +15,13 @@ from nomade.settings import Settings
 class Nomad:
     def __init__(self, settings_path='pyproject.toml'):
         self.settings = Settings.load(settings_path)
-        self.database = Database(self.settings.connection_string)
+        try:
+            self.database = Database(self.settings.connection_string)
+        except AttributeError:
+            click.secho(
+                'Error: CONNECTION_STRING not defined!', fg=level.ERROR
+            )
+            exit(1)
 
     @staticmethod
     def init():

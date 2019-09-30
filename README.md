@@ -29,6 +29,8 @@ Nomade is a simple migration manager tool that aims to be easy to integrate with
 
 This tool was inspired by [alembic](https://alembic.sqlalchemy.org/en/latest/) (if you are using SQLAlchemy as ORM you should consider using alembic).
 
+> **Note**: this project is still under development so you may find bugs. If you find any bug, feel free to contribute by creating an issue and/or submitting a PR to fix it.
+
 ## Installation
 
 Use [pip](https://pip.pypa.io/en/stable/installing/) to install Nomade:

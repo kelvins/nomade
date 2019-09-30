@@ -1,0 +1,5 @@
+[tool.nomade]
+migrations = "nomade/migrations"
+template = "nomade/template.py.j2"
+date-format = "%d/%m/%Y"
+name-format = "{date}_{time}_{id}_{slug}"

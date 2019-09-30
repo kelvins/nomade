@@ -27,7 +27,7 @@ class NomadeModel(Base):
     """
 
     __tablename__ = 'nomade'
-    migration = sa.Column(sa.String, primary_key=True)
+    migration = sa.Column(sa.String(8), primary_key=True)
 
     def __repr__(self):
         return f'<Nomade(migration={self.migration})>'

@@ -12,7 +12,7 @@ It basically follows the following approach to define versions (**MAJOR.MINOR.PA
 - **MINOR** for new functionalities that are backward compatible.
 - **PATCH** for backward compatible bug fixes.
 
-[Unreleased]
+[Unreleased] [1.0.0] - 2019-10-05
 ------------
 
 Added

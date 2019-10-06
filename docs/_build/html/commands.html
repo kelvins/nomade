@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Commands &#8212; Nomade 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Settings" href="settings.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<p>Here you can find a description of all <code class="docutils literal notranslate"><span class="pre">Nomade</span></code> commands:</p>
+<div class="section" id="version">
+<h2>Version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
+<p>Show the <code class="docutils literal notranslate"><span class="pre">Nomade</span></code> version.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade version</p>
+</div></blockquote>
+</div>
+<div class="section" id="init">
+<h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h2>
+<p>Initialize a <code class="docutils literal notranslate"><span class="pre">Nomade</span></code> project.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade init</p>
+</div></blockquote>
+</div>
+<div class="section" id="migrate">
+<h2>Migrate<a class="headerlink" href="#migrate" title="Permalink to this headline">¶</a></h2>
+<p>Create a new <code class="docutils literal notranslate"><span class="pre">Nomade</span></code> migration.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade migrate “My First Migration”</p>
+</div></blockquote>
+</div>
+<div class="section" id="upgrade">
+<h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
+<p>Upgrade database version.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade upgrade head</p>
+<p>$ nomade upgrade 1</p>
+</div></blockquote>
+</div>
+<div class="section" id="downgrade">
+<h2>Downgrade<a class="headerlink" href="#downgrade" title="Permalink to this headline">¶</a></h2>
+<p>Downgrade database version.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade downgrade tail</p>
+<p>$ nomade downgrade 1</p>
+</div></blockquote>
+</div>
+<div class="section" id="history">
+<h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>Show migration history.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade history</p>
+</div></blockquote>
+</div>
+<div class="section" id="current">
+<h2>Current<a class="headerlink" href="#current" title="Permalink to this headline">¶</a></h2>
+<p>Show the current migration applied in the database.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade current</p>
+</div></blockquote>
+</div>
+<div class="section" id="help">
+<h2>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>Show <code class="docutils literal notranslate"><span class="pre">Nomade</span></code> helper.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade –help</p>
+</div></blockquote>
+</div>
+<div class="section" id="stamp">
+<h2>Stamp<a class="headerlink" href="#stamp" title="Permalink to this headline">¶</a></h2>
+<p>Stamp a specific migration to the database.</p>
+<p><strong>Note</strong>: this command will not run any migration, it will only save the migration ID in the database.</p>
+<p>Usage:</p>
+<blockquote>
+<div><p>$ nomade stamp u19jh2h1</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Nomade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version">Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#init">Init</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#migrate">Migrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downgrade">Downgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current">Current</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#help">Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stamp">Stamp</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">nomade</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="quickstart.html" title="previous chapter">Quick Start</a></li>
+      <li>Next: <a href="settings.html" title="next chapter">Settings</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Kelvin S. do Prado.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/commands.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

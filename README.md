@@ -109,4 +109,4 @@ Commands:
 ## How to Contribute
 
 - Check for open issues or open a fresh one to start a discussion around a feature idea or a bug.
-- Become more familiar with the project by reading the [Contributor's Guide](CONTRIBUTING.rst).
+- Become more familiar with the project by reading the [Contributor's Guide](CONTRIBUTING.md).

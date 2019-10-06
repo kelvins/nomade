@@ -18,6 +18,9 @@
     <a href="https://github.com/psf/black" alt="Code Style">
         <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
     </a>
+    <a href="https://kelvins.github.io/nomade" alt="Documentation">
+        <img src="https://img.shields.io/badge/docs-github-green.svg" />
+    </a>
     <a href="https://github.com/kelvins/nomade/blob/master/LICENSE" alt="License">
         <img src="https://img.shields.io/badge/license-apache%202.0-blue.svg" />
     </a>

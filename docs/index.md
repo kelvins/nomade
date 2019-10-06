@@ -1,32 +1,4 @@
-<p align="center">
-    <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="250" height="150" />
-</p>
-
-<p align="center">
-    <a href="https://travis-ci.org/kelvins/nomade" alt="Build Status">
-        <img src="https://travis-ci.org/kelvins/nomade.svg?branch=master" />
-    </a>
-    <a href="https://coveralls.io/github/kelvins/nomade?branch=master" alt="Coverage Status">
-        <img src="https://coveralls.io/repos/github/kelvins/nomade/badge.svg?branch=master" />
-    </a>
-    <a href="https://pypi.org/project/nomade/" alt="PyPI Version">
-        <img src="https://img.shields.io/pypi/v/nomade.svg" />
-    </a>
-    <a href="https://www.python.org/downloads/release/python-370/" alt="Python Version">
-        <img src="https://img.shields.io/badge/python-3.7-blue.svg" />
-    </a>
-    <a href="https://github.com/psf/black" alt="Code Style">
-        <img src="https://img.shields.io/badge/code%20style-black-000000.svg" />
-    </a>
-    <a href="https://kelvins.github.io/nomade" alt="Documentation">
-        <img src="https://img.shields.io/badge/docs-github-green.svg" />
-    </a>
-    <a href="https://github.com/kelvins/nomade/blob/master/LICENSE" alt="License">
-        <img src="https://img.shields.io/badge/license-apache%202.0-blue.svg" />
-    </a>
-</p>
-
-> Python Migration Manager for Humans :camel:
+# About
 
 Nomade is a simple migration manager tool that aims to be easy to integrate with any ORM (e.g. [SQLAlchemy](https://www.sqlalchemy.org/), [Peewee](http://docs.peewee-orm.com/en/latest/), [Pony](https://ponyorm.org/)) and database (e.g. [SQLite](https://www.sqlite.org/index.html), [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/)). It is basically a command-line interface (CLI) tool that manages migrations (Python files) by applying changes to the database schema and storing the current migration ID.
 
@@ -71,6 +43,8 @@ date-format = "%d/%m/%Y"
 name-format = "{date}_{time}_{id}_{slug}"
 ```
 
+**Note**: check out all **Nomade** settings in the [settings](./settings.md) documentation.
+
 Then, create your first migration:
 
 ```bash
@@ -85,7 +59,7 @@ Then apply the migration to the database:
 $ nomade upgrade head
 ```
 
-To discover more **Nomade** features please read the documentation or call for help:
+To discover more **Nomade** features please read [commands](./commands.md) documentation or call for help:
 
 ```
 $ nomade --help
@@ -106,7 +80,3 @@ Commands:
   version    Show Nomade version.
 ```
 
-## How to Contribute
-
-- Check for open issues or open a fresh one to start a discussion around a feature idea or a bug.
-- Become more familiar with the project by reading the [Contributor's Guide](CONTRIBUTING.rst).

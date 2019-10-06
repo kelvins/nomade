@@ -26,7 +26,3 @@ security:  ## Run security checks using bandit
 publish:  ## Publish the package on PyPI
 	@rm -rf dist
 	@poetry publish --build
-
-documentation:  ## Make the HTML documentation with sphinx
-	@sphinx-apidoc -f -o docs nomade
-	@(cd docs; make html)

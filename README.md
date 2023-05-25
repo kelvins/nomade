@@ -1,5 +1,3 @@
-> :warning: This project is no longer maintained
-
 <p align="center">
     <img src="https://github.com/kelvins/nomade/blob/master/artwork/logo.svg" alt="Nomade Logo" title="Nomade Logo" width="250" height="150" />
 </p>
